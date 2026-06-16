@@ -1,7 +1,7 @@
 ---
 title: "Waaban"
 role: "Co-founder & CEO"
-dates: "2025–present"
+dates: "2026–present"
 order: 1
 summary: "AI-powered market-analysis platform."
 status: "Live"

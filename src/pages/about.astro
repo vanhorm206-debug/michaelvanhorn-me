@@ -1,0 +1,228 @@
+---
+import { Image } from 'astro:assets';
+import Button from '../components/Button.astro';
+import ContactBand from '../components/ContactBand.astro';
+import ExperienceItem from '../components/ExperienceItem.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import headshot from '../assets/headshot.png';
+
+const description =
+	'HRD researcher and builder working on the human side of AI in the workplace, raised on the Red Lake Nation and based in the Twin Cities.';
+
+const experience = [
+	{ org: 'EY', role: 'Incoming Intern', dates: 'Fall 2026 · Ho Chi Minh City' },
+	{
+		org: 'Meet Minneapolis',
+		role: 'Equity & Community Impact Intern',
+		dates: 'Mar 2026–present · Minneapolis, MN',
+	},
+	{ org: 'Waaban', role: 'Co-founder & CEO', dates: 'Mar 2026–present' },
+	{
+		org: 'University of Minnesota, Career Services',
+		role: 'Office Assistant',
+		dates: 'Jun 2025–Mar 2026 · Minneapolis, MN',
+	},
+	{
+		org: 'Red Lake School District',
+		role: 'HR & Logistics Intern',
+		dates: 'Jan 2024–Aug 2024 · Red Lake, MN',
+	},
+];
+
+const education = [
+	{
+		org: 'University of Minnesota–Twin Cities',
+		role: 'B.S., Human Resource Development (CEHD / OLPD)',
+		dates: 'Expected Dec 2026 · GPA 3.71',
+	},
+	{
+		org: 'Bemidji State University',
+		role: 'Associate of Liberal Education',
+		dates: '2022–2024 · GPA 3.84',
+	},
+];
+---
+
+<PageLayout title="About · Michael Van Horn" description={description}>
+	<section class="about-intro" aria-labelledby="about-title">
+		<div class="wide intro-inner">
+			<div class="intro-text">
+				<p class="kicker">About</p>
+				<h1 id="about-title">I work on the human side of AI in the workplace.</h1>
+				<p class="lead">
+					I am an HRD researcher and builder. I study how AI adoption reshapes work and
+					stress, and I build the tools and frameworks that help non-technical teams own
+					the change instead of being run over by it.
+				</p>
+				<div class="actions">
+					<Button href="/resume.pdf" variant="ghost">Download résumé (PDF)</Button>
+				</div>
+			</div>
+			<div class="intro-portrait">
+				<Image
+					src={headshot}
+					alt="Michael Van Horn"
+					width={1126}
+					height={1408}
+					format="webp"
+					widths={[240, 320, 400, 520]}
+					sizes="(min-width: 880px) 400px, 250px"
+					class="intro-portrait-image"
+				/>
+			</div>
+		</div>
+	</section>
+
+	<section class="about-section" aria-labelledby="story-title">
+		<div class="wide section-inner story-inner">
+			<SectionHeading
+				kicker="How I got here"
+				title="People first, then the tools."
+				accent="green"
+				id="story-title"
+			/>
+			<div class="prose story">
+				<p>
+					I am Anishinaabe, a descendant of the Red Lake Nation. I grew up in Ponemah and
+					Redby on the reservation before moving to the Twin Cities. That background is not
+					a footnote to this work; it is the reason for it. I saw early how change arrives
+					in a community: who it serves, who it leaves behind, and how a place carries its
+					people through it. I bring that question into every conversation about technology
+					and work.
+				</p>
+				<p>
+					My path runs through people first. I came to AI through human resource
+					development: recruiting, onboarding, training, and the daily work of helping
+					people find footing when their jobs change. The more I watched AI enter the
+					workplace, the clearer it became that the hard part was never the tool. It was
+					trust, learning, and whether the people doing the work were brought along or
+					pushed aside.
+				</p>
+				<p>
+					So I do both halves. I co-authored a manuscript on AI adoption and job stress,
+					and I build real systems: an AI-powered market-analysis platform, a multi-agent
+					governance layer that keeps a knowledge base honest, and tools that give
+					non-technical teams safe, live access to AI. The research keeps the building
+					grounded in people. The building keeps the research grounded in what actually
+					ships.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="about-section card-section" aria-labelledby="experience-title">
+		<div class="wide section-inner">
+			<SectionHeading kicker="Experience" title="Where the work happens." id="experience-title" />
+			<div class="timeline">
+				{
+					experience.map((item) => (
+						<ExperienceItem org={item.org} role={item.role} dates={item.dates} />
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="about-section" aria-labelledby="education-title">
+		<div class="wide section-inner">
+			<SectionHeading kicker="Education" title="Studied to do this work." id="education-title" />
+			<div class="timeline">
+				{
+					education.map((item) => (
+						<ExperienceItem org={item.org} role={item.role} dates={item.dates} />
+					))
+				}
+			</div>
+			<div class="actions">
+				<Button href="/resume.pdf" variant="ghost">Download résumé (PDF)</Button>
+			</div>
+		</div>
+	</section>
+
+	<ContactBand />
+</PageLayout>
+
+<style>
+	.about-intro,
+	.about-section {
+		background: var(--paper);
+		border-bottom: 1px solid var(--line);
+	}
+
+	.card-section {
+		background: var(--card);
+	}
+
+	.intro-inner {
+		display: grid;
+		grid-template-columns: 1.4fr 0.6fr;
+		align-items: center;
+		gap: clamp(2rem, 5vw, 4rem);
+		padding-block: clamp(3rem, 8vw, 5.5rem);
+	}
+
+	.intro-text {
+		display: grid;
+		gap: 1.1rem;
+	}
+
+	.intro-text h1 {
+		font-size: clamp(2.2rem, 6vw, 3.5rem);
+		letter-spacing: 0;
+	}
+
+	.lead {
+		color: var(--muted);
+		font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+		max-width: var(--maxw-prose);
+	}
+
+	.actions {
+		margin-top: 0.5rem;
+	}
+
+	.intro-portrait {
+		justify-self: end;
+	}
+
+	.intro-portrait-image {
+		width: clamp(180px, 30vw, 320px);
+		height: auto;
+		border-radius: var(--radius);
+	}
+
+	.section-inner {
+		display: grid;
+		gap: clamp(1.25rem, 3vw, 2rem);
+		padding-block: var(--space-section);
+	}
+
+	.story {
+		display: grid;
+		gap: 1.15rem;
+		max-width: var(--maxw-prose);
+	}
+
+	.story :global(p) {
+		color: var(--ink);
+		font-size: clamp(1.05rem, 2vw, 1.18rem);
+	}
+
+	.timeline {
+		display: grid;
+		max-width: var(--maxw-prose);
+		border-bottom: 1px solid var(--line);
+	}
+
+	@media (max-width: 760px) {
+		.intro-inner {
+			grid-template-columns: 1fr;
+		}
+
+		.intro-portrait {
+			justify-self: start;
+			order: -1;
+		}
+	}
+</style>
