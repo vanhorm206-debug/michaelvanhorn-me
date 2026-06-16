@@ -1,10 +1,12 @@
 ---
+import { Image } from 'astro:assets';
 import Button from '../components/Button.astro';
 import ContactBand from '../components/ContactBand.astro';
 import ExperienceItem from '../components/ExperienceItem.astro';
 import PageLayout from '../layouts/PageLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import headshot from '../assets/headshot.png';
 
 const description =
 	'HRD researcher and builder. I study how AI adoption reshapes work and stress, and I build the tools and frameworks that make the shift humane.';
@@ -13,12 +15,26 @@ const description =
 <PageLayout title="Michael Van Horn · The human side of AI in the workplace" description={description}>
 	<section class="home-section hero">
 		<div class="wide section-inner hero-inner">
-			<p class="kicker">The human side of AI in the workplace</p>
-			<h1>I help people and organizations work <em>well</em> with AI.</h1>
-			<p class="hero-copy">{description}</p>
-			<div class="actions" aria-label="Homepage actions">
-				<Button href="/work">Read the work</Button>
-				<Button href="/contact" variant="ghost">Get in touch</Button>
+			<div class="hero-content">
+				<p class="kicker">The human side of AI in the workplace</p>
+				<h1>I help people and organizations work <em>well</em> with AI.</h1>
+				<p class="hero-copy">{description}</p>
+				<div class="actions" aria-label="Homepage actions">
+					<Button href="/work">Read the work</Button>
+					<Button href="/contact" variant="ghost">Get in touch</Button>
+				</div>
+			</div>
+			<div class="hero-portrait">
+				<Image
+					src={headshot}
+					alt="Michael Van Horn"
+					width={1126}
+					height={1408}
+					format="webp"
+					widths={[240, 320, 400, 520]}
+					sizes="(min-width: 880px) 400px, 250px"
+					class="hero-portrait-image"
+				/>
 			</div>
 		</div>
 	</section>
@@ -132,8 +148,24 @@ const description =
 	}
 
 	.hero-inner {
-		gap: 1.2rem;
+		gap: clamp(2rem, 5vw, 4rem);
 		padding-block: clamp(4rem, 10vw, 7rem);
+	}
+
+	.hero-content {
+		display: grid;
+		gap: 1.2rem;
+	}
+
+	.hero-portrait {
+		display: flex;
+		justify-content: center;
+		order: -1;
+	}
+
+	.hero-portrait-image {
+		width: min(250px, 72vw);
+		height: auto;
 	}
 
 	h1 {
@@ -194,6 +226,32 @@ const description =
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.75rem;
+	}
+
+	@media (min-width: 880px) {
+		.hero-inner {
+			grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+			align-items: end;
+			gap: clamp(2rem, 4vw, 3rem);
+			padding-bottom: 0;
+		}
+
+		.hero-content {
+			padding-bottom: clamp(4rem, 10vw, 7rem);
+		}
+
+		h1 {
+			font-size: clamp(3.8rem, 6vw, 5rem);
+		}
+
+		.hero-portrait {
+			order: initial;
+			align-self: end;
+		}
+
+		.hero-portrait-image {
+			width: min(100%, 380px);
+		}
 	}
 
 	@media (max-width: 760px) {
