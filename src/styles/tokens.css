@@ -7,7 +7,7 @@
   --line:   #E6DFD3;
   --card:   #FFFFFF;
 
-  --font-serif: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-serif: "Inter Variable", system-ui, -apple-system, sans-serif; /* serif retired; unified to sans */
   --font-sans:  "Inter Variable", system-ui, -apple-system, sans-serif;
 
   --maxw-prose:  720px;
