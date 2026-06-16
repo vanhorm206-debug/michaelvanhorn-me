@@ -21,22 +21,23 @@ const description = 'Notes on AI, work, and the people the shift affects.';
 				<p>Short pieces on AI adoption, job stress, and keeping the human side in view.</p>
 			</div>
 
-			{
-				posts.length > 0 ? (
-					<div class="post-list">
-						{posts.map((post) => (
-							<PostListItem
-								title={post.data.title}
-								date={post.data.date}
-								dek={post.data.dek}
-								href={`/writing/${post.id}`}
-							/>
-						))}
-					</div>
-				) : (
-					<p class="empty">Notes are coming soon.</p>
-				)
-			}
+			<div class="post-list">
+				{posts.map((post) => (
+					<PostListItem
+						title={post.data.title}
+						date={post.data.date}
+						dek={post.data.dek}
+						href={`/writing/${post.id}`}
+					/>
+				))}
+				<PostListItem
+					title="How to Work in Virtual Teams"
+					dek="On virtual-team group dynamics: forming, storming, norming, and performing, the roles people play, and how to collaborate well online."
+					href="https://medium.com/@vanho316/how-to-work-in-virtual-teams-7869b0ba951e"
+					meta="Essay · Medium"
+					external
+				/>
+			</div>
 		</div>
 	</section>
 </PageLayout>

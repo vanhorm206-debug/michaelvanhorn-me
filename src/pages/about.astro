@@ -38,8 +38,8 @@ const education = [
 	},
 	{
 		org: 'Bemidji State University',
-		role: 'Associate of Liberal Education',
-		dates: '2022–2024 · GPA 3.84',
+		role: 'Associate of Arts (AA), Liberal Arts & Sciences (PSEO)',
+		dates: "2022–2024 · Dean's List",
 	},
 ];
 ---
@@ -88,24 +88,30 @@ const education = [
 					Redby on the reservation before moving to the Twin Cities. That background is not
 					a footnote to this work; it is the reason for it. I saw early how change arrives
 					in a community: who it serves, who it leaves behind, and how a place carries its
-					people through it. I bring that question into every conversation about technology
-					and work.
+					people through it. Growing up on the Red Lake Nation taught me that strong
+					organizations start with relationships, integrity, and cultural awareness. That
+					shapes how I think about every part of human resource development, from how we
+					train people to how we build systems that actually include them.
 				</p>
 				<p>
 					My path runs through people first. I came to AI through human resource
 					development: recruiting, onboarding, training, and the daily work of helping
-					people find footing when their jobs change. The more I watched AI enter the
+					people find footing when their jobs change. Working in University of Minnesota
+					Career Services, I authored a formal AI usage policy and training framework for
+					the office, alongside SOPs for its core functions. The more I watched AI enter the
 					workplace, the clearer it became that the hard part was never the tool. It was
 					trust, learning, and whether the people doing the work were brought along or
 					pushed aside.
 				</p>
 				<p>
 					So I do both halves. I co-authored a manuscript on AI adoption and job stress,
-					and I build real systems: an AI-powered market-analysis platform, a multi-agent
+					presented at the 2026 OLPD Student Research Conference at the University of
+					Minnesota, and I build real systems: an AI-powered market-analysis platform, a multi-agent
 					governance layer that keeps a knowledge base honest, and tools that give
 					non-technical teams safe, live access to AI. The research keeps the building
 					grounded in people. The building keeps the research grounded in what actually
-					ships.
+					ships. Training-and-development professionals should be leading the conversation
+					about AI at work, not just reacting to it.
 				</p>
 			</div>
 		</div>
@@ -137,6 +143,22 @@ const education = [
 			<div class="actions">
 				<Button href="/resume.pdf" variant="ghost">Download résumé (PDF)</Button>
 			</div>
+		</div>
+	</section>
+
+	<section class="about-section card-section" aria-labelledby="certifications-title">
+		<div class="wide section-inner">
+			<SectionHeading kicker="Certifications" title="Trained on the tools, too." id="certifications-title" />
+			<ul class="cert-list">
+				<li class="cert-item">
+					<h3>AI Fluency: Framework &amp; Foundations</h3>
+					<p>Anthropic</p>
+				</li>
+				<li class="cert-item">
+					<h3>Claude 101</h3>
+					<p>Anthropic</p>
+				</li>
+			</ul>
 		</div>
 	</section>
 
@@ -213,6 +235,34 @@ const education = [
 		display: grid;
 		max-width: var(--maxw-prose);
 		border-bottom: 1px solid var(--line);
+	}
+
+	.cert-list {
+		display: grid;
+		max-width: var(--maxw-prose);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.cert-item {
+		display: grid;
+		gap: 0.2rem;
+		border-top: 1px solid var(--line);
+		padding-block: 1rem;
+	}
+
+	.cert-item h3 {
+		font-family: var(--font-sans);
+		font-size: 1rem;
+		font-weight: 700;
+		line-height: 1.3;
+	}
+
+	.cert-item p {
+		color: var(--muted);
+		font-size: 0.95rem;
 	}
 
 	@media (max-width: 760px) {
