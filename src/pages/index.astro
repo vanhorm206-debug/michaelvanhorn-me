@@ -1,1 +1,64 @@
-<h1>Michael Van Horn</h1>
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Button from '../components/Button.astro';
+import ContactBand from '../components/ContactBand.astro';
+import ExperienceItem from '../components/ExperienceItem.astro';
+import PostListItem from '../components/PostListItem.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+---
+
+<PageLayout
+	title="Michael Van Horn — The human side of AI in the workplace"
+	description="HRD researcher and builder focused on the human side of AI in the workplace."
+>
+	<section class="phase-two-harness wide">
+		<p class="kicker">The human side of AI in the workplace</p>
+		<h1>Michael Van Horn</h1>
+		<p>
+			Temporary Phase 2 design-system harness for typography, navigation, buttons, footer, and the
+			contact band.
+		</p>
+		<div class="actions">
+			<Button href="/work">Read the work</Button>
+			<Button href="/contact" variant="ghost">Get in touch</Button>
+		</div>
+	</section>
+	<section class="component-smoke" hidden aria-hidden="true">
+		<SectionHeading kicker="Component smoke" title="Shared components" accent="green" />
+		<ProjectCard name="Project" blurb="Component compile smoke." href="/work" />
+		<ExperienceItem org="Organization" role="Role" dates="2026" />
+		<PostListItem
+			title="Post"
+			date={new Date('2026-06-16T00:00:00')}
+			dek="Component compile smoke."
+			href="/writing"
+		/>
+	</section>
+	<ContactBand />
+</PageLayout>
+
+<style>
+	.phase-two-harness {
+		display: grid;
+		gap: 1rem;
+		padding-block: var(--space-section);
+	}
+
+	h1 {
+		font-size: clamp(2.7rem, 9vw, 5.25rem);
+		max-width: 820px;
+	}
+
+	p:not(.kicker) {
+		color: var(--muted);
+		font-size: clamp(1rem, 2vw, 1.15rem);
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		padding-top: 0.5rem;
+	}
+</style>

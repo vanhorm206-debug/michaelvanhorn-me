@@ -1,0 +1,42 @@
+---
+interface Props {
+	name: string;
+	blurb: string;
+	href: string;
+}
+
+const { name, blurb, href } = Astro.props;
+---
+
+<a class="project-card" href={href}>
+	<h3>{name}</h3>
+	<p>{blurb}</p>
+</a>
+
+<style>
+	.project-card {
+		display: grid;
+		gap: 0.65rem;
+		min-height: 100%;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: var(--card);
+		color: var(--ink);
+		padding: 1.25rem;
+		text-decoration: none;
+	}
+
+	.project-card:hover {
+		border-color: var(--clay);
+		text-decoration: none;
+	}
+
+	h3 {
+		font-size: 1.35rem;
+	}
+
+	p {
+		color: var(--muted);
+		font-size: 0.98rem;
+	}
+</style>

@@ -1,0 +1,17 @@
+:root {
+  --paper:  #FAF7F1;
+  --ink:    #211C16;
+  --muted:  #6B6359;
+  --clay:   #B5532A;
+  --green:  #2E4034;
+  --line:   #E6DFD3;
+  --card:   #FFFFFF;
+
+  --font-serif: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-sans:  "Inter Variable", system-ui, -apple-system, sans-serif;
+
+  --maxw-prose:  720px;
+  --maxw-wide:   980px;
+  --space-section: clamp(2.5rem, 6vw, 4.5rem);
+  --radius: 4px;
+}
