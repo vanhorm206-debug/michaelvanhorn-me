@@ -1,0 +1,59 @@
+---
+const links = [
+	{ href: '/work', label: 'Work' },
+	{ href: '/writing', label: 'Writing' },
+	{ href: '/about', label: 'About' },
+	{ href: '/contact', label: 'Contact' },
+];
+---
+
+<footer class="site-footer">
+	<div class="footer-inner wide">
+		<a class="footer-brand" href="/">Michael Van Horn</a>
+		<nav class="footer-nav" aria-label="Footer navigation">
+			{links.map((link) => <a href={link.href}>{link.label}</a>)}
+		</nav>
+		<div class="footer-contact">
+			<a href="mailto:vanhorm206@gmail.com">vanhorm206@gmail.com</a>
+			<a href="https://linkedin.com/in/michaelvanhorn06">LinkedIn</a>
+			<span>michaelvanhorn.me</span>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		background: var(--green);
+		color: var(--paper);
+	}
+
+	.footer-inner {
+		display: grid;
+		gap: 1.25rem;
+		padding-block: clamp(2rem, 5vw, 3rem);
+	}
+
+	.footer-brand {
+		color: var(--paper);
+		font-family: var(--font-serif);
+		font-size: 1.4rem;
+		text-decoration: none;
+	}
+
+	.footer-nav,
+	.footer-contact {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem 1.25rem;
+	}
+
+	.site-footer a,
+	.footer-contact span {
+		color: var(--paper);
+		font-size: 0.95rem;
+	}
+
+	.site-footer a:hover {
+		text-decoration-thickness: 2px;
+	}
+</style>

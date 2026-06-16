@@ -1,0 +1,137 @@
+---
+const currentPath = Astro.url.pathname;
+const normalize = (path: string) => (path === '/' ? '/' : path.replace(/\/$/, ''));
+const isCurrent = (href: string) => normalize(currentPath) === normalize(href);
+const links = [
+	{ href: '/work', label: 'Work' },
+	{ href: '/writing', label: 'Writing' },
+	{ href: '/about', label: 'About' },
+	{ href: '/contact', label: 'Contact', accent: true },
+];
+---
+
+<header class="site-header">
+	<nav class="site-nav wide" aria-label="Primary navigation">
+		<a class="brand" href="/" aria-current={isCurrent('/') ? 'page' : undefined}>Michael Van Horn</a>
+		<div class="desktop-links">
+			{links.map((link) => (
+				<a
+					class:list={['nav-link', { accent: link.accent }]}
+					href={link.href}
+					aria-current={isCurrent(link.href) ? 'page' : undefined}
+				>
+					{link.label}
+				</a>
+			))}
+		</div>
+		<details class="mobile-menu">
+			<summary>Menu</summary>
+			<div class="mobile-links">
+				{links.map((link) => (
+					<a
+						class:list={['nav-link', { accent: link.accent }]}
+						href={link.href}
+						aria-current={isCurrent(link.href) ? 'page' : undefined}
+					>
+						{link.label}
+					</a>
+				))}
+			</div>
+		</details>
+	</nav>
+</header>
+
+<style>
+	.site-header {
+		border-bottom: 1px solid var(--line);
+		background: var(--paper);
+	}
+
+	.site-nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-block: 1rem;
+	}
+
+	.brand {
+		color: var(--ink);
+		font-family: var(--font-serif);
+		font-size: clamp(1.25rem, 3vw, 1.55rem);
+		font-weight: 500;
+		line-height: 1;
+		text-decoration: none;
+	}
+
+	.desktop-links,
+	.mobile-links {
+		align-items: center;
+		gap: 1.25rem;
+	}
+
+	.desktop-links {
+		display: flex;
+	}
+
+	.nav-link {
+		color: var(--ink);
+		font-size: 0.95rem;
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.nav-link:hover,
+	.nav-link[aria-current='page'] {
+		color: var(--clay);
+	}
+
+	.nav-link.accent {
+		color: var(--clay);
+	}
+
+	.mobile-menu {
+		display: none;
+		position: relative;
+	}
+
+	.mobile-menu summary {
+		display: inline-flex;
+		align-items: center;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		color: var(--ink);
+		cursor: pointer;
+		font-size: 0.9rem;
+		font-weight: 600;
+		list-style: none;
+		padding: 0.45rem 0.7rem;
+	}
+
+	.mobile-menu summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.mobile-links {
+		display: grid;
+		margin-top: 0.75rem;
+		min-width: 180px;
+		border: 1px solid var(--line);
+		background: var(--paper);
+		padding: 0.75rem;
+	}
+
+	@media (max-width: 640px) {
+		.site-nav {
+			align-items: flex-start;
+		}
+
+		.desktop-links {
+			display: none;
+		}
+
+		.mobile-menu {
+			display: block;
+		}
+	}
+</style>

@@ -1,0 +1,30 @@
+---
+interface Props {
+	kicker: string;
+	title?: string;
+	accent?: 'clay' | 'green';
+}
+
+const { kicker, title, accent = 'clay' } = Astro.props;
+---
+
+<div class:list={['section-heading', accent]}>
+	<p class="kicker">{kicker}</p>
+	{title && <h2>{title}</h2>}
+</div>
+
+<style>
+	.section-heading {
+		display: grid;
+		gap: 0.55rem;
+	}
+
+	.section-heading.green .kicker {
+		color: var(--green);
+	}
+
+	h2 {
+		font-size: clamp(1.8rem, 5vw, 3rem);
+		letter-spacing: 0;
+	}
+</style>

@@ -1,0 +1,53 @@
+---
+interface Props {
+	title: string;
+	date: Date;
+	dek?: string;
+	href: string;
+}
+
+const { title, date, dek, href } = Astro.props;
+const formattedDate = new Intl.DateTimeFormat('en', {
+	month: 'long',
+	day: 'numeric',
+	year: 'numeric',
+}).format(date);
+---
+
+<article class="post-list-item">
+	<p class="date">{formattedDate}</p>
+	<h3><a href={href}>{title}</a></h3>
+	{dek && <p class="dek">{dek}</p>}
+</article>
+
+<style>
+	.post-list-item {
+		display: grid;
+		gap: 0.35rem;
+		border-top: 1px solid var(--line);
+		padding-block: 1.1rem;
+	}
+
+	.date,
+	.dek {
+		color: var(--muted);
+	}
+
+	.date {
+		font-size: 0.85rem;
+	}
+
+	h3 {
+		font-size: clamp(1.25rem, 3vw, 1.6rem);
+	}
+
+	h3 a {
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	h3 a:hover {
+		color: var(--clay);
+		text-decoration: underline;
+	}
+</style>
