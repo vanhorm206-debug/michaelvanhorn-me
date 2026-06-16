@@ -1,23 +1,29 @@
 ---
 interface Props {
 	title: string;
-	date: Date;
+	date?: Date;
 	dek?: string;
 	href: string;
+	external?: boolean;
+	meta?: string;
 }
 
-const { title, date, dek, href } = Astro.props;
-const formattedDate = new Intl.DateTimeFormat('en', {
-	month: 'long',
-	day: 'numeric',
-	year: 'numeric',
-	timeZone: 'UTC',
-}).format(date);
+const { title, date, dek, href, external = false, meta } = Astro.props;
+const formattedDate = date
+	? new Intl.DateTimeFormat('en', {
+			month: 'long',
+			day: 'numeric',
+			year: 'numeric',
+			timeZone: 'UTC',
+		}).format(date)
+	: undefined;
+const label = formattedDate ?? meta;
+const externalAttrs = external ? { target: '_blank', rel: 'noopener' } : {};
 ---
 
 <article class="post-list-item">
-	<p class="date">{formattedDate}</p>
-	<h3><a href={href}>{title}</a></h3>
+	{label && <p class="date">{label}</p>}
+	<h3><a href={href} {...externalAttrs}>{title}</a></h3>
 	{dek && <p class="dek">{dek}</p>}
 </article>
 
