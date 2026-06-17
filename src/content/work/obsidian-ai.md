@@ -7,8 +7,8 @@ summary: "Personal AI memory + agent system."
 status: "Personal project"
 ---
 
-The Obsidian AI System is my personal memory and agent environment for turning research, plans, and operating context into something AI can use responsibly.
+The Obsidian AI System is my personal memory and agent environment: a way to turn research, plans, and operating context into something AI can use responsibly, instead of starting cold in every chat.
 
-It uses knowledge files, hooks, skills, and an agent layer to make the system more durable than a single chat thread. The goal is to help AI work with context that has been intentionally written, organized, and maintained.
+It runs on knowledge files, hooks, skills, and a multi-agent governance layer (Townfolk) that enforces data integrity across the knowledge base. That layer is in daily production use, catching drift and keeping the memory honest as it grows. Durable, written-down context beats a single chat thread.
 
-The vault contents stay private. What I show publicly is the architecture and the ideas behind it: how to give AI better working memory without exposing everything a person knows.
+The vault contents stay private. What I show is the architecture and the ideas: how to give AI better working memory without exposing everything a person knows.
