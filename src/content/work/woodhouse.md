@@ -7,8 +7,8 @@ summary: "Self-built task manager replacing Asana."
 status: "Personal project"
 ---
 
-Woodhouse is a task system I built for myself after outgrowing the way off-the-shelf project tools handled my work.
+Woodhouse is the task system I built for myself after off-the-shelf tools stopped fitting how I work. It replaced Asana as my daily driver and now runs my day-to-day.
 
-It is a local dashboard backed by a private GitHub repo through an Express proxy. Tasks, notes, and project context live close to the work itself, so the system can stay lightweight while still giving me the structure I need.
+It is a local dashboard backed by a private GitHub repo through an Express proxy. Tasks, notes, and project context live close to the work, so it stays lightweight while still giving me real structure. AI agents read and write tasks directly, which is the part the off-the-shelf tools could not do.
 
-The point of Woodhouse is simple: I build the systems I need. It reflects how I prefer to work with software, where the tool adapts to the workflow instead of making the workflow bend around the tool.
+The point of Woodhouse is simple: I build the systems I need. The tool adapts to the workflow instead of the workflow bending around the tool.
