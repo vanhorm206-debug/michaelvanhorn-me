@@ -1,0 +1,110 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { site } from '../../data/site.ts';
+import { useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props {
+	lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const channels = [
+	{
+		label: t('contact.channel.email'),
+		value: site.email,
+		href: `mailto:${site.email}`,
+	},
+	{
+		label: t('contact.channel.linkedin'),
+		value: site.linkedin.replace('https://', ''),
+		href: site.linkedin,
+	},
+	{ label: t('contact.channel.location'), value: site.location },
+];
+---
+
+<PageLayout title={t('contact.meta.title')} description={t('contact.meta.description')}>
+	<section class="contact-page" aria-labelledby="contact-title">
+		<div class="prose contact-inner">
+			<p class="kicker">{t('contact.kicker')}</p>
+			<h1 id="contact-title">{t('contact.title')}</h1>
+			<p class="lead">{t('contact.lead')}</p>
+			<dl class="channels">
+				{
+					channels.map((channel) => (
+						<div class="channel">
+							<dt>{channel.label}</dt>
+							<dd>
+								{channel.href ? (
+									<a href={channel.href}>{channel.value}</a>
+								) : (
+									channel.value
+								)}
+							</dd>
+						</div>
+					))
+				}
+			</dl>
+		</div>
+	</section>
+</PageLayout>
+
+<style>
+	.contact-page {
+		background: var(--paper);
+		border-bottom: 1px solid var(--line);
+	}
+
+	.contact-inner {
+		display: grid;
+		gap: 1rem;
+		padding-block: var(--space-section);
+	}
+
+	.contact-inner h1 {
+		font-size: clamp(2rem, 5vw, 3.25rem);
+		letter-spacing: 0;
+	}
+
+	.lead {
+		color: var(--muted);
+		font-size: clamp(1.05rem, 2vw, 1.2rem);
+	}
+
+	.channels {
+		display: grid;
+		gap: 0;
+		margin: 0.75rem 0 0;
+		max-width: var(--maxw-prose);
+	}
+
+	.channel {
+		display: grid;
+		grid-template-columns: 8rem 1fr;
+		gap: 1rem;
+		border-top: 1px solid var(--line);
+		padding-block: 1rem;
+	}
+
+	dt {
+		color: var(--muted);
+		font-size: 0.8rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		padding-top: 0.15rem;
+	}
+
+	dd {
+		margin: 0;
+		font-size: clamp(1.05rem, 2vw, 1.2rem);
+	}
+
+	@media (max-width: 560px) {
+		.channel {
+			grid-template-columns: 1fr;
+			gap: 0.25rem;
+		}
+	}
+</style>

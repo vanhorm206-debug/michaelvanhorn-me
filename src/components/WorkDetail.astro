@@ -1,0 +1,168 @@
+---
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Button from './Button.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import { localizePath, useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	lang: Locale;
+	project: CollectionEntry<'work'>;
+}
+
+const { lang, project } = Astro.props;
+const t = useTranslations(lang);
+const { Content } = await render(project);
+const pageTitle = `${project.data.title} · ${t('work.kicker')} · Michael Van Horn`;
+const description = project.data.summary;
+const backHref = localizePath('/work', lang);
+---
+
+<PageLayout title={pageTitle} description={description}>
+	<article class="work-detail">
+		<header class="wide detail-header">
+			<a class="back-link" href={backHref}>{t('work.back')}</a>
+			<div class="page-heading">
+				<p class="kicker">{t('work.kicker')}</p>
+				<h1>{project.data.title}</h1>
+			</div>
+			<div class="project-meta" aria-label={t('work.metaAria')}>
+				<span>{project.data.role}</span>
+				<span>{project.data.dates}</span>
+				{project.data.status && <span class="status">{project.data.status}</span>}
+			</div>
+			<p>{project.data.summary}</p>
+			{
+				project.data.links && project.data.links.length > 0 && (
+					<div class="link-row" aria-label={t('work.linksAria')}>
+						{project.data.links.map((link) => (
+							<Button href={link.url} variant="ghost">
+								{link.label}
+							</Button>
+						))}
+					</div>
+				)
+			}
+		</header>
+
+		<div class="prose detail-body">
+			<Content />
+		</div>
+	</article>
+</PageLayout>
+
+<style>
+	.work-detail {
+		background: var(--paper);
+		border-bottom: 1px solid var(--line);
+		padding-block: var(--space-section);
+	}
+
+	.detail-header {
+		display: grid;
+		gap: 1rem;
+		margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+	}
+
+	.page-heading {
+		display: grid;
+		gap: 0.55rem;
+	}
+
+	.page-heading h1 {
+		font-size: clamp(1.8rem, 5vw, 3rem);
+		letter-spacing: 0;
+	}
+
+	.back-link {
+		width: fit-content;
+		color: var(--clay);
+		font-size: 0.95rem;
+		font-weight: 600;
+		text-decoration-thickness: 1px;
+	}
+
+	.detail-header p {
+		color: var(--muted);
+		font-size: clamp(1.05rem, 2vw, 1.2rem);
+	}
+
+	.project-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
+		color: var(--muted);
+		font-size: 0.95rem;
+	}
+
+	.status {
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		color: var(--green);
+		font-weight: 600;
+		line-height: 1.2;
+		padding: 0.2rem 0.45rem;
+	}
+
+	.link-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 0.25rem;
+	}
+
+	.detail-body {
+		display: grid;
+		gap: 1.15rem;
+	}
+
+	.detail-body :global(p) {
+		color: var(--ink);
+		font-size: clamp(1.05rem, 2vw, 1.18rem);
+	}
+
+	.detail-body :global(h2) {
+		font-size: clamp(1.5rem, 3vw, 2rem);
+		margin-top: 0.75rem;
+	}
+
+	.detail-body :global(h3) {
+		font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+		margin-top: 0.5rem;
+	}
+
+	.detail-body :global(a) {
+		color: var(--clay);
+	}
+
+	.detail-body :global(ul),
+	.detail-body :global(ol) {
+		display: grid;
+		gap: 0.5rem;
+		margin: 0;
+		padding-left: 1.4rem;
+		color: var(--ink);
+		font-size: clamp(1.05rem, 2vw, 1.18rem);
+	}
+
+	.detail-body :global(li) {
+		padding-left: 0.25rem;
+	}
+
+	.detail-body :global(blockquote) {
+		margin: 0;
+		border-left: 3px solid var(--clay);
+		padding-left: 1.15rem;
+		color: var(--muted);
+		font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+		font-style: italic;
+	}
+
+	.detail-body :global(code) {
+		background: var(--card);
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		padding: 0.1rem 0.35rem;
+		font-size: 0.9em;
+	}
+</style>

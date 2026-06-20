@@ -1,18 +1,22 @@
 ---
 import { site } from '../data/site.ts';
+import { getLangFromUrl, localizePath, useTranslations } from '../i18n/ui';
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const links = [
-	{ href: '/work', label: 'Work' },
-	{ href: '/writing', label: 'Writing' },
-	{ href: '/about', label: 'About' },
-	{ href: '/contact', label: 'Contact' },
+	{ href: localizePath('/work', lang), label: t('nav.work') },
+	{ href: localizePath('/writing', lang), label: t('nav.writing') },
+	{ href: localizePath('/about', lang), label: t('nav.about') },
+	{ href: localizePath('/contact', lang), label: t('nav.contact') },
 ];
+const localizedHome = localizePath('/', lang);
 ---
 
 <footer class="site-footer">
 	<div class="footer-inner wide">
-		<a class="footer-brand" href="/">Michael Van Horn</a>
-		<nav class="footer-nav" aria-label="Footer navigation">
+		<a class="footer-brand" href={localizedHome}>Michael Van Horn</a>
+		<nav class="footer-nav" aria-label={t('footer.navAria')}>
 			{links.map((link) => <a href={link.href}>{link.label}</a>)}
 		</nav>
 		<div class="footer-contact">

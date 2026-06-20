@@ -1,4 +1,6 @@
 ---
+import { type Locale } from '../i18n/ui';
+
 interface Props {
 	title: string;
 	date?: Date;
@@ -6,11 +8,12 @@ interface Props {
 	href: string;
 	external?: boolean;
 	meta?: string;
+	locale?: Locale;
 }
 
-const { title, date, dek, href, external = false, meta } = Astro.props;
+const { title, date, dek, href, external = false, meta, locale = 'en' } = Astro.props;
 const formattedDate = date
-	? new Intl.DateTimeFormat('en', {
+	? new Intl.DateTimeFormat(locale, {
 			month: 'long',
 			day: 'numeric',
 			year: 'numeric',

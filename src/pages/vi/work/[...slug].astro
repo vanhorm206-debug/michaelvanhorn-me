@@ -1,13 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
-import WorkDetail from '../../components/WorkDetail.astro';
-import { localeFromEntryId } from '../../i18n/ui';
+import WorkDetail from '../../../components/WorkDetail.astro';
+import { localeFromEntryId } from '../../../i18n/ui';
 
 export async function getStaticPaths() {
 	const projects = await getCollection('work', ({ data }) => !data.draft);
 
 	return projects
-		.filter((project) => localeFromEntryId(project.id).locale === 'en')
+		.filter((project) => localeFromEntryId(project.id).locale === 'vi')
 		.map((project) => ({
 			params: { slug: localeFromEntryId(project.id).slug },
 			props: { project },
@@ -17,4 +17,4 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 ---
 
-<WorkDetail lang="en" project={project} />
+<WorkDetail lang="vi" project={project} />

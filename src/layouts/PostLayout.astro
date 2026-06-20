@@ -1,23 +1,27 @@
 ---
 import PageLayout from './PageLayout.astro';
+import { localizePath, useTranslations, type Locale } from '../i18n/ui';
 
 interface Props {
 	title: string;
 	date: Date;
 	dek?: string;
 	tags?: string[];
+	lang?: Locale;
 }
 
-const { title, date, dek, tags } = Astro.props;
+const { title, date, dek, tags, lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
 const description = dek ?? title;
-const pageTitle = `${title} · Writing · Michael Van Horn`;
-const formattedDate = new Intl.DateTimeFormat('en', {
+const pageTitle = `${title} · ${t('writing.kicker')} · Michael Van Horn`;
+const formattedDate = new Intl.DateTimeFormat(lang, {
 	month: 'long',
 	day: 'numeric',
 	year: 'numeric',
 	timeZone: 'UTC',
 }).format(date);
 const isoDate = date.toISOString().slice(0, 10);
+const backHref = localizePath('/writing', lang);
 ---
 
 <PageLayout
@@ -28,13 +32,13 @@ const isoDate = date.toISOString().slice(0, 10);
 >
 	<article class="post">
 		<header class="prose post-header">
-			<a class="back-link" href="/writing">Back to writing</a>
-			<p class="kicker">Writing</p>
+			<a class="back-link" href={backHref}>{t('writing.back')}</a>
+			<p class="kicker">{t('writing.kicker')}</p>
 			<h1>{title}</h1>
 			<p class="post-date"><time datetime={isoDate}>{formattedDate}</time></p>
 			{
 				tags && tags.length > 0 && (
-					<ul class="tags" aria-label="Tags">
+					<ul class="tags" aria-label={t('writing.tagsAria')}>
 						{tags.map((tag) => (
 							<li>{tag}</li>
 						))}

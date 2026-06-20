@@ -9,5 +9,12 @@ export default defineConfig({
 	build: {
 		format: 'file',
 	},
+	i18n: {
+		defaultLocale: 'en',
+		locales: ['en', 'vi', 'es'],
+		routing: {
+			prefixDefaultLocale: false,
+		},
+	},
 	integrations: [sitemap()],
 });

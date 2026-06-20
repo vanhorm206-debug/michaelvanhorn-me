@@ -1,0 +1,323 @@
+---
+import { Image } from 'astro:assets';
+import Button from '../Button.astro';
+import ContactBand from '../ContactBand.astro';
+import ExperienceItem from '../ExperienceItem.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
+import ProjectCard from '../ProjectCard.astro';
+import SectionHeading from '../SectionHeading.astro';
+import headshot from '../../assets/headshot.png';
+import { localizePath, useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props {
+	lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const to = (path: string) => localizePath(path, lang);
+---
+
+<PageLayout title={t('home.meta.title')} description={t('home.meta.description')}>
+	<section class="home-section hero">
+		<div class="wide section-inner hero-inner">
+			<div class="hero-content">
+				<p class="kicker">{t('home.hero.kicker')}</p>
+				<h1>
+					{t('home.hero.heading.before')}<em>{t('home.hero.heading.emphasis')}</em>{t('home.hero.heading.after')}
+				</h1>
+				<p class="hero-copy">{t('home.meta.description')}</p>
+				<div class="actions" aria-label={t('home.actions.label')}>
+					<Button href={to('/work')}>{t('home.actions.work')}</Button>
+					<Button href={to('/contact')} variant="ghost">{t('home.actions.contact')}</Button>
+				</div>
+			</div>
+			<div class="hero-portrait">
+				<Image
+					src={headshot}
+					alt="Michael Van Horn"
+					width={1126}
+					height={1408}
+					format="webp"
+					widths={[240, 320, 400, 520]}
+					sizes="(min-width: 880px) 400px, 250px"
+					class="hero-portrait-image"
+					loading="eager"
+					fetchpriority="high"
+				/>
+			</div>
+		</div>
+	</section>
+
+	<section class="home-section card-section why-section" aria-label={t('home.why.aria')}>
+		<div class="wide section-inner">
+			<SectionHeading kicker={t('home.why.kicker')} accent="green" />
+			<p class="statement">{t('home.why.statement')}</p>
+		</div>
+	</section>
+
+	<section class="home-section" aria-labelledby="featured-research-title">
+		<div class="wide section-inner research-inner">
+			<SectionHeading
+				kicker={t('home.research.kicker')}
+				title={t('home.research.title')}
+				id="featured-research-title"
+			/>
+			<p>{t('home.research.body')}</p>
+			<div class="actions">
+				<Button href={to('/research')} variant="ghost">{t('home.research.cta')}</Button>
+			</div>
+		</div>
+	</section>
+
+	<section class="home-section card-section" aria-labelledby="selected-work-title">
+		<div class="wide section-inner selected-work">
+			<SectionHeading
+				kicker={t('home.work.kicker')}
+				title={t('home.work.title')}
+				id="selected-work-title"
+			/>
+			<div class="project-grid">
+				<ProjectCard name="Waaban" blurb={t('home.work.waaban.blurb')} href={to('/work/waaban')} />
+				<ProjectCard
+					name="Marked in Red"
+					blurb={t('home.work.markedInRed.blurb')}
+					href={to('/work/marked-in-red')}
+				/>
+				<ProjectCard name="Woodhouse" blurb={t('home.work.woodhouse.blurb')} href={to('/work/woodhouse')} />
+				<ProjectCard
+					name="Obsidian AI"
+					blurb={t('home.work.obsidianAi.blurb')}
+					href={to('/work/obsidian-ai')}
+				/>
+			</div>
+			<div class="actions">
+				<Button href={to('/work')}>{t('home.work.cta')}</Button>
+			</div>
+		</div>
+	</section>
+
+	<section class="home-section" aria-labelledby="writing-title">
+		<div class="wide section-inner writing-inner">
+			<SectionHeading kicker={t('home.writing.kicker')} title={t('home.writing.title')} id="writing-title" />
+			<p>{t('home.writing.body')}</p>
+			<div class="actions">
+				<Button href={to('/writing')}>{t('home.writing.cta')}</Button>
+			</div>
+		</div>
+	</section>
+
+	<section class="home-section card-section" aria-labelledby="experience-title">
+		<div class="wide section-inner experience-inner">
+			<SectionHeading
+				kicker={t('home.experience.kicker')}
+				title={t('home.experience.title')}
+				id="experience-title"
+			/>
+			<div class="experience-list">
+				<ExperienceItem org="Meet Minneapolis" role={t('home.experience.meetMinneapolis.role')} dates="2026–" />
+				<ExperienceItem org="Waaban" role={t('home.experience.waaban.role')} dates="2026–" />
+			</div>
+			<div class="actions">
+				<Button href="/resume.pdf" variant="ghost">{t('home.experience.resume')}</Button>
+			</div>
+		</div>
+	</section>
+
+	<section class="home-section" aria-labelledby="recommendation-title">
+		<div class="wide section-inner recommendation-inner">
+			<SectionHeading
+				kicker={t('home.recommendation.kicker')}
+				title={t('home.recommendation.title')}
+				id="recommendation-title"
+			/>
+			<figure class="recommendation">
+				<blockquote>
+					<p>{t('home.recommendation.quote1')}</p>
+					<p>{t('home.recommendation.quote2')}</p>
+				</blockquote>
+				<figcaption>
+					<span class="rec-name">{t('home.recommendation.name')}</span>
+					<span class="rec-role">{t('home.recommendation.role')}</span>
+					<span class="rec-context">{t('home.recommendation.context')}</span>
+				</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<ContactBand title={t('home.contact.title')} />
+</PageLayout>
+
+<style>
+	.home-section {
+		border-bottom: 1px solid var(--line);
+		background: var(--paper);
+	}
+
+	.card-section {
+		background: var(--card);
+	}
+
+	.section-inner {
+		display: grid;
+		gap: clamp(1.25rem, 3vw, 2rem);
+		padding-block: var(--space-section);
+	}
+
+	.hero-inner {
+		gap: clamp(2rem, 5vw, 4rem);
+		padding-block: clamp(4rem, 10vw, 7rem);
+	}
+
+	.hero-content {
+		display: grid;
+		gap: 1.2rem;
+	}
+
+	.hero-portrait {
+		display: flex;
+		justify-content: center;
+		order: -1;
+	}
+
+	.hero-portrait-image {
+		width: min(250px, 72vw);
+		height: auto;
+		border-radius: var(--radius);
+		border: 1px solid var(--line);
+		box-shadow: 0 1px 2px rgba(33, 28, 22, 0.04), 0 10px 28px rgba(33, 28, 22, 0.08);
+	}
+
+	h1 {
+		max-width: 900px;
+		font-size: clamp(2.3rem, 9vw, 6.6rem);
+		letter-spacing: 0;
+		overflow-wrap: break-word;
+		hyphens: none;
+	}
+
+	h1 em {
+		font-style: italic;
+	}
+
+	.hero-copy {
+		max-width: 720px;
+		color: var(--muted);
+		font-size: clamp(1.08rem, 2vw, 1.28rem);
+	}
+
+	.statement {
+		max-width: 860px;
+		color: var(--ink);
+		font-family: var(--font-serif);
+		font-size: clamp(1.8rem, 4.8vw, 3.35rem);
+		font-weight: 500;
+		line-height: 1.14;
+	}
+
+	.research-inner,
+	.writing-inner,
+	.experience-inner {
+		max-width: var(--maxw-prose);
+		margin-inline: auto;
+	}
+
+	.research-inner p,
+	.writing-inner p {
+		color: var(--muted);
+		font-size: clamp(1rem, 2vw, 1.12rem);
+	}
+
+	.selected-work {
+		gap: 1.5rem;
+	}
+
+	.project-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.experience-list {
+		display: grid;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	@media (min-width: 880px) {
+		.hero-inner {
+			grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+			align-items: end;
+			gap: clamp(2rem, 4vw, 3rem);
+			padding-bottom: 0;
+		}
+
+		.hero-content {
+			padding-bottom: clamp(4rem, 10vw, 7rem);
+		}
+
+		h1 {
+			font-size: clamp(3.8rem, 6vw, 5rem);
+		}
+
+		.hero-portrait {
+			order: initial;
+			align-self: end;
+		}
+
+		.hero-portrait-image {
+			width: min(100%, 380px);
+		}
+	}
+
+	@media (max-width: 760px) {
+		.project-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.recommendation-inner {
+		max-width: var(--maxw-prose);
+		margin-inline: auto;
+	}
+
+	.recommendation {
+		margin: 0;
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.recommendation blockquote {
+		margin: 0;
+		display: grid;
+		gap: 0.9rem;
+		padding-left: 1.25rem;
+		border-left: 2px solid var(--clay);
+	}
+
+	.recommendation blockquote p {
+		color: var(--ink);
+		font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+		line-height: 1.4;
+	}
+
+	.recommendation figcaption {
+		display: grid;
+		gap: 0.1rem;
+	}
+
+	.rec-name {
+		font-weight: 600;
+		color: var(--ink);
+	}
+
+	.rec-role,
+	.rec-context {
+		color: var(--muted);
+		font-size: 0.95rem;
+	}
+</style>

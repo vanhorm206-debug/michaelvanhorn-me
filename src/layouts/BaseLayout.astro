@@ -3,6 +3,7 @@ import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
+import { getLangFromUrl, locales, localizePath, stripLocalePrefix, useTranslations } from '../i18n/ui';
 
 interface Props {
 	title: string;
@@ -28,6 +29,14 @@ const canonicalPath = Astro.url.pathname
 	.replace(/\/$/, '');
 const canonical = new URL(canonicalPath || '/', Astro.site);
 const image = new URL(ogImage, Astro.site);
+const locale = getLangFromUrl(Astro.url);
+const t = useTranslations(locale);
+const barePath = stripLocalePrefix(canonicalPath || '/');
+const alternateLinks = locales.map((lang) => ({
+	lang,
+	href: new URL(localizePath(barePath, lang), Astro.site),
+}));
+const xDefaultHref = new URL(localizePath(barePath, 'en'), Astro.site);
 
 const personSchema = {
 	'@context': 'https://schema.org',
@@ -48,7 +57,7 @@ const personSchema = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -56,6 +65,8 @@ const personSchema = {
 		<meta name="description" content={description} />
 		<meta name="author" content="Michael Van Horn" />
 		<link rel="canonical" href={canonical} />
+		{alternateLinks.map((link) => <link rel="alternate" hreflang={link.lang} href={link.href} />)}
+		<link rel="alternate" hreflang="x-default" href={xDefaultHref} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content={ogType} />
@@ -73,7 +84,7 @@ const personSchema = {
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 	</head>
 	<body>
-		<a href="#main-content" class="skip-link">Skip to content</a>
+		<a href="#main-content" class="skip-link">{t('chrome.skipToContent')}</a>
 		<slot />
 		<Analytics />
 	</body>

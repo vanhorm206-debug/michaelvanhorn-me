@@ -1,18 +1,26 @@
 ---
+import { getLangFromUrl, localizePath, useTranslations } from '../i18n/ui';
+import LangSwitcher from './LangSwitcher.astro';
+
 const currentPath = Astro.url.pathname;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const normalize = (path: string) => (path === '/' ? '/' : path.replace(/\/$/, ''));
 const isCurrent = (href: string) => normalize(currentPath) === normalize(href);
+const localizedHome = localizePath('/', lang);
 const links = [
-	{ href: '/work', label: 'Work' },
-	{ href: '/writing', label: 'Writing' },
-	{ href: '/about', label: 'About' },
-	{ href: '/contact', label: 'Contact', accent: true },
+	{ href: localizePath('/work', lang), label: t('nav.work') },
+	{ href: localizePath('/writing', lang), label: t('nav.writing') },
+	{ href: localizePath('/about', lang), label: t('nav.about') },
+	{ href: localizePath('/contact', lang), label: t('nav.contact'), accent: true },
 ];
 ---
 
 <header class="site-header">
 	<nav class="site-nav wide" aria-label="Primary navigation">
-		<a class="brand" href="/" aria-current={isCurrent('/') ? 'page' : undefined}>Michael Van Horn</a>
+		<a class="brand" href={localizedHome} aria-current={isCurrent(localizedHome) ? 'page' : undefined}>
+			Michael Van Horn
+		</a>
 		<div class="desktop-links">
 			{links.map((link) => (
 				<a
@@ -23,9 +31,10 @@ const links = [
 					{link.label}
 				</a>
 			))}
+			<LangSwitcher />
 		</div>
 		<details class="mobile-menu">
-			<summary>Menu</summary>
+			<summary>{t('nav.menu')}</summary>
 			<div class="mobile-links">
 				{links.map((link) => (
 					<a
@@ -36,6 +45,7 @@ const links = [
 						{link.label}
 					</a>
 				))}
+				<LangSwitcher />
 			</div>
 		</details>
 	</nav>

@@ -1,0 +1,255 @@
+---
+import { Image } from 'astro:assets';
+import Button from '../Button.astro';
+import ContactBand from '../ContactBand.astro';
+import ExperienceItem from '../ExperienceItem.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../SectionHeading.astro';
+import headshot from '../../assets/headshot.png';
+import { useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props {
+	lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const experience = [
+	{
+		org: 'Meet Minneapolis',
+		role: t('about.experience.meetMinneapolis.role'),
+		dates: t('about.experience.meetMinneapolis.dates'),
+	},
+	{ org: 'Waaban', role: t('about.experience.waaban.role'), dates: t('about.experience.waaban.dates') },
+	{
+		org: 'University of Minnesota, Career Services',
+		role: t('about.experience.umn.role'),
+		dates: t('about.experience.umn.dates'),
+	},
+	{
+		org: 'Red Lake School District',
+		role: t('about.experience.redLake.role'),
+		dates: t('about.experience.redLake.dates'),
+	},
+];
+
+const education = [
+	{
+		org: 'University of Minnesota–Twin Cities',
+		role: t('about.education.umn.role'),
+		dates: t('about.education.umn.dates'),
+	},
+	{
+		org: 'Bemidji State University',
+		role: t('about.education.bemidji.role'),
+		dates: t('about.education.bemidji.dates'),
+	},
+];
+---
+
+<PageLayout title={t('about.meta.title')} description={t('about.meta.description')}>
+	<section class="about-intro" aria-labelledby="about-title">
+		<div class="wide intro-inner">
+			<div class="intro-text">
+				<p class="kicker">{t('about.kicker')}</p>
+				<h1 id="about-title">{t('about.hero.title')}</h1>
+				<p class="lead">{t('about.hero.lead')}</p>
+				<div class="actions">
+					<Button href="/resume.pdf" variant="ghost">{t('about.resume')}</Button>
+				</div>
+			</div>
+			<div class="intro-portrait">
+				<Image
+					src={headshot}
+					alt="Michael Van Horn"
+					width={1126}
+					height={1408}
+					format="webp"
+					widths={[240, 320, 400, 520]}
+					sizes="(min-width: 880px) 400px, 250px"
+					class="intro-portrait-image"
+					loading="eager"
+					fetchpriority="high"
+				/>
+			</div>
+		</div>
+	</section>
+
+	<section class="about-section" aria-labelledby="story-title">
+		<div class="wide section-inner story-inner">
+			<SectionHeading
+				kicker={t('about.story.kicker')}
+				title={t('about.story.title')}
+				accent="green"
+				id="story-title"
+			/>
+			<div class="prose story">
+				<p>{t('about.story.p1')}</p>
+				<p>{t('about.story.p2')}</p>
+				<p>{t('about.story.p3')}</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="about-section card-section" aria-labelledby="experience-title">
+		<div class="wide section-inner">
+			<SectionHeading kicker={t('about.experience.kicker')} title={t('about.experience.title')} id="experience-title" />
+			<div class="timeline">
+				{
+					experience.map((item) => (
+						<ExperienceItem org={item.org} role={item.role} dates={item.dates} />
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="about-section" aria-labelledby="education-title">
+		<div class="wide section-inner">
+			<SectionHeading kicker={t('about.education.kicker')} title={t('about.education.title')} id="education-title" />
+			<div class="timeline">
+				{
+					education.map((item) => (
+						<ExperienceItem org={item.org} role={item.role} dates={item.dates} />
+					))
+				}
+			</div>
+			<div class="actions">
+				<Button href="/resume.pdf" variant="ghost">{t('about.resume')}</Button>
+			</div>
+		</div>
+	</section>
+
+	<section class="about-section card-section" aria-labelledby="certifications-title">
+		<div class="wide section-inner">
+			<SectionHeading kicker={t('about.certifications.kicker')} title={t('about.certifications.title')} id="certifications-title" />
+			<ul class="cert-list">
+				<li class="cert-item">
+					<h3>{t('about.certifications.aiFluency')}</h3>
+					<p>{t('about.certifications.anthropic')}</p>
+				</li>
+				<li class="cert-item">
+					<h3>{t('about.certifications.claude101')}</h3>
+					<p>{t('about.certifications.anthropic')}</p>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<ContactBand title={t('about.contact.title')} />
+</PageLayout>
+
+<style>
+	.about-intro,
+	.about-section {
+		background: var(--paper);
+		border-bottom: 1px solid var(--line);
+	}
+
+	.card-section {
+		background: var(--card);
+	}
+
+	.intro-inner {
+		display: grid;
+		grid-template-columns: 1.4fr 0.6fr;
+		align-items: center;
+		gap: clamp(2rem, 5vw, 4rem);
+		padding-block: clamp(3rem, 8vw, 5.5rem);
+	}
+
+	.intro-text {
+		display: grid;
+		gap: 1.1rem;
+	}
+
+	.intro-text h1 {
+		font-size: clamp(2.2rem, 6vw, 3.5rem);
+		letter-spacing: 0;
+	}
+
+	.lead {
+		color: var(--muted);
+		font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+		max-width: var(--maxw-prose);
+	}
+
+	.actions {
+		margin-top: 0.5rem;
+	}
+
+	.intro-portrait {
+		justify-self: end;
+	}
+
+	.intro-portrait-image {
+		width: clamp(180px, 30vw, 320px);
+		height: auto;
+		border-radius: var(--radius);
+		border: 1px solid var(--line);
+		box-shadow: 0 1px 2px rgba(33, 28, 22, 0.04), 0 10px 28px rgba(33, 28, 22, 0.08);
+	}
+
+	.section-inner {
+		display: grid;
+		gap: clamp(1.25rem, 3vw, 2rem);
+		padding-block: var(--space-section);
+	}
+
+	.story {
+		display: grid;
+		gap: 1.15rem;
+		max-width: var(--maxw-prose);
+	}
+
+	.story :global(p) {
+		color: var(--ink);
+		font-size: clamp(1.05rem, 2vw, 1.18rem);
+	}
+
+	.timeline {
+		display: grid;
+		max-width: var(--maxw-prose);
+		border-bottom: 1px solid var(--line);
+	}
+
+	.cert-list {
+		display: grid;
+		max-width: var(--maxw-prose);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.cert-item {
+		display: grid;
+		gap: 0.2rem;
+		border-top: 1px solid var(--line);
+		padding-block: 1rem;
+	}
+
+	.cert-item h3 {
+		font-family: var(--font-sans);
+		font-size: 1rem;
+		font-weight: 700;
+		line-height: 1.3;
+	}
+
+	.cert-item p {
+		color: var(--muted);
+		font-size: 0.95rem;
+	}
+
+	@media (max-width: 760px) {
+		.intro-inner {
+			grid-template-columns: 1fr;
+		}
+
+		.intro-portrait {
+			justify-self: start;
+			order: -1;
+		}
+	}
+</style>

@@ -1,10 +1,16 @@
 ---
 import { site } from '../data/site.ts';
+
+interface Props {
+	title?: string;
+}
+
+const { title = "Let's talk about AI and people." } = Astro.props;
 ---
 
 <section class="contact-band" aria-labelledby="contact-band-title">
 	<div class="contact-inner wide">
-		<h2 id="contact-band-title">Let's talk about AI and people.</h2>
+		<h2 id="contact-band-title">{title}</h2>
 		<div class="contact-links">
 			<a href={`mailto:${site.email}`}>{site.email}</a>
 			<a href={site.linkedin}>LinkedIn</a>

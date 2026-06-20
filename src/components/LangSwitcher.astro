@@ -1,0 +1,120 @@
+---
+import {
+	getLangFromUrl,
+	languageShortLabels,
+	languages,
+	locales,
+	switchLocalePath,
+	useTranslations,
+	type Locale,
+} from '../i18n/ui';
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const options = locales.filter((lang) => lang !== currentLang);
+---
+
+<details class="lang-switcher">
+	<summary aria-label={t('language.label')}>
+		<span>{languageShortLabels[currentLang]}</span>
+	</summary>
+	<ul class="lang-options">
+		{
+			options.map((lang: Locale) => (
+				<li>
+					<a href={switchLocalePath(Astro.url.pathname, lang)} hreflang={lang} lang={lang}>
+						<span>{languageShortLabels[lang]}</span>
+						<span>{languages[lang]}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</details>
+
+<style>
+	.lang-switcher {
+		position: relative;
+	}
+
+	.lang-switcher summary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 2.8rem;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		color: var(--ink);
+		cursor: pointer;
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		line-height: 1;
+		list-style: none;
+		padding: 0.48rem 0.58rem;
+		text-decoration: none;
+	}
+
+	.lang-switcher summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.lang-switcher[open] summary,
+	.lang-switcher summary:hover {
+		border-color: var(--clay);
+		color: var(--clay);
+	}
+
+	.lang-options {
+		position: absolute;
+		right: 0;
+		z-index: 10;
+		display: grid;
+		min-width: 150px;
+		margin-top: 0.65rem;
+		border: 1px solid var(--line);
+		background: var(--paper);
+		list-style: none;
+		padding: 0.4rem;
+	}
+
+	.lang-options a {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.9rem;
+		color: var(--ink);
+		font-size: 0.9rem;
+		font-weight: 500;
+		padding: 0.45rem 0.5rem;
+		text-decoration: none;
+	}
+
+	.lang-options a span:first-child {
+		color: var(--muted);
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+
+	.lang-options a:hover {
+		background: color-mix(in srgb, var(--clay) 8%, transparent);
+		color: var(--clay);
+		text-decoration: none;
+	}
+
+	@media (max-width: 640px) {
+		.lang-switcher summary {
+			width: 100%;
+			justify-content: space-between;
+			min-height: 2.3rem;
+		}
+
+		.lang-options {
+			position: static;
+			min-width: 100%;
+			margin-top: 0.45rem;
+			background: var(--card);
+		}
+	}
+</style>

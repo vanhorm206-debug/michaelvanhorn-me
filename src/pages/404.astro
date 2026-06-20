@@ -1,22 +1,22 @@
 ---
 import Button from '../components/Button.astro';
 import PageLayout from '../layouts/PageLayout.astro';
+import { getLangFromUrl, localizePath, useTranslations } from '../i18n/ui';
 
-const description = 'The page you were looking for could not be found.';
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const to = (path: string) => localizePath(path, lang);
 ---
 
-<PageLayout title="Page not found · Michael Van Horn" description={description}>
+<PageLayout title={t('notFound.meta.title')} description={t('notFound.meta.description')}>
 	<section class="notfound" aria-labelledby="notfound-title">
 		<div class="prose notfound-inner">
-			<p class="kicker">Error 404</p>
-			<h1 id="notfound-title">This page wandered off.</h1>
-			<p class="lead">
-				The page you were looking for is not here. It may have moved, or the link may be
-				incomplete.
-			</p>
+			<p class="kicker">{t('notFound.kicker')}</p>
+			<h1 id="notfound-title">{t('notFound.title')}</h1>
+			<p class="lead">{t('notFound.lead')}</p>
 			<div class="actions">
-				<Button href="/">Back to home</Button>
-				<Button href="/work" variant="ghost">See the work</Button>
+				<Button href={to('/')}>{t('notFound.home')}</Button>
+				<Button href={to('/work')} variant="ghost">{t('notFound.work')}</Button>
 			</div>
 		</div>
 	</section>
