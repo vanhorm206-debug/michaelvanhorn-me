@@ -4,10 +4,15 @@ role: "Solo build"
 dates: "2026"
 order: 4
 summary: "Awareness map for Missing and Murdered Indigenous Women, Girls, and Two-Spirit people."
-status: "Shipped"
+status: "Live demo"
+links:
+  - label: "View live demo"
+    url: "https://marked-in-red.vercel.app/"
+  - label: "View source"
+    url: "https://github.com/vanhorm206-debug/marked-in-red"
 ---
 
-Marked in Red is an interactive awareness map for Missing and Murdered Indigenous Women, Girls, and Two-Spirit people (MMIWG2S). I scoped, designed, and shipped it end to end.
+Marked in Red is an interactive awareness map for Missing and Murdered Indigenous Women, Girls, and Two-Spirit people (MMIWG2S). I scoped, designed, and built it end to end. What's live today is a working demo on clearly-labeled sample data; the real version, sourced responsibly from public records and built with community guidance, is the next step.
 
 It is built with Next.js, Supabase, and Leaflet: an interactive map layer over a structured data backend. The work was about turning something heavy and often abstract into something people can see and sit with.
 
