@@ -9,7 +9,7 @@ links:
   - label: "Ver demo en vivo"
     url: "https://marked-in-red.vercel.app/"
   - label: "Ver código fuente"
-    url: "https://github.com/vanhorm206-debug/marked-in-red"
+    url: "https://github.com/mike-vanhorn/marked-in-red"
 ---
 
 Marked in Red es un mapa interactivo de concientización sobre Mujeres, Niñas y personas Two-Spirit Indígenas desaparecidas y asesinadas (MMIWG2S). Lo definí, diseñé y construí de principio a fin. Lo que está en vivo hoy es una demo funcional con datos de muestra claramente etiquetados; la versión real, obtenida de forma responsable a partir de registros públicos y construida con la guía de la comunidad, es el siguiente paso.

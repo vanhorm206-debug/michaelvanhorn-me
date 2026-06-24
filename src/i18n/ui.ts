@@ -135,6 +135,7 @@ export const ui = {
 			"The best ways to reach me are below. I read every message and reply whenever there's a fit, whether that's collaboration, research, or a role.",
 		'contact.channel.email': 'Email',
 		'contact.channel.linkedin': 'LinkedIn',
+		'contact.channel.github': 'GitHub',
 		'contact.channel.location': 'Location',
 		'research.meta.title': 'Research · AI Adoption & Job Stress · Michael Van Horn',
 		'research.meta.description':
@@ -323,6 +324,7 @@ export const ui = {
 			'Những cách tốt nhất để liên hệ với tôi ở bên dưới. Tôi đọc mọi tin nhắn và phản hồi khi có sự phù hợp, dù đó là hợp tác, nghiên cứu hay một vai trò.',
 		'contact.channel.email': 'Email',
 		'contact.channel.linkedin': 'LinkedIn',
+		'contact.channel.github': 'GitHub',
 		'contact.channel.location': 'Địa điểm',
 		'research.meta.title': 'Nghiên cứu · AI Adoption & Job Stress · Michael Van Horn',
 		'research.meta.description':
@@ -513,6 +515,7 @@ export const ui = {
 			'Las mejores formas de contactarme están abajo. Leo todos los mensajes y respondo cuando hay encaje, ya sea colaboración, investigación o un puesto.',
 		'contact.channel.email': 'Email',
 		'contact.channel.linkedin': 'LinkedIn',
+		'contact.channel.github': 'GitHub',
 		'contact.channel.location': 'Ubicación',
 		'research.meta.title': 'Investigación · AI Adoption & Job Stress · Michael Van Horn',
 		'research.meta.description':
@@ -701,6 +704,7 @@ export const ui = {
 			"The best ways to reach me are below. I read every message and reply whenever there's a fit, whether that's collaboration, research, or a role.",
 		'contact.channel.email': 'Email',
 		'contact.channel.linkedin': 'LinkedIn',
+		'contact.channel.github': 'GitHub',
 		'contact.channel.location': 'Location',
 		'research.meta.title': 'Research · AI Adoption & Job Stress · Michael Van Horn',
 		'research.meta.description':

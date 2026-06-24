@@ -9,7 +9,7 @@ links:
   - label: "Xem bản demo"
     url: "https://marked-in-red.vercel.app/"
   - label: "Xem mã nguồn"
-    url: "https://github.com/vanhorm206-debug/marked-in-red"
+    url: "https://github.com/mike-vanhorn/marked-in-red"
 ---
 
 Marked in Red là một bản đồ nâng cao nhận thức có tính tương tác về Phụ nữ, Trẻ em gái và Người Two-Spirit Bản địa bị mất tích và bị sát hại (MMIWG2S). Tôi đã xác định phạm vi, thiết kế và xây dựng nó trọn vẹn từ đầu đến cuối. Những gì trực tuyến hôm nay là một bản demo hoạt động trên dữ liệu mẫu được dán nhãn rõ ràng; phiên bản thật, được lấy nguồn một cách có trách nhiệm từ hồ sơ công khai và xây dựng với sự dẫn dắt của cộng đồng, là bước tiếp theo.
