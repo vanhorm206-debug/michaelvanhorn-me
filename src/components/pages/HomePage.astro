@@ -98,8 +98,6 @@ const to = (path: string) => localizePath(path, lang);
 		</div>
 	</section>
 
-	<OpenSourceSection lang={lang} />
-
 	<section class="home-section" aria-labelledby="writing-title">
 		<div class="wide section-inner writing-inner">
 			<SectionHeading kicker={t('home.writing.kicker')} title={t('home.writing.title')} id="writing-title" />
@@ -147,6 +145,8 @@ const to = (path: string) => localizePath(path, lang);
 			</figure>
 		</div>
 	</section>
+
+	<OpenSourceSection lang={lang} />
 
 	<ContactBand title={t('home.contact.title')} />
 </PageLayout>

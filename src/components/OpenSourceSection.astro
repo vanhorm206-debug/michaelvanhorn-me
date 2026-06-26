@@ -133,8 +133,15 @@ const json = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 <script is:inline src="/open-source-section.js" defer></script>
 
 <style is:global>
+	.open-source-section {
+		border-bottom: 1px solid var(--line);
+		background: var(--card);
+	}
+
 	.open-source-section .open-source-inner {
+		display: grid;
 		gap: 1.5rem;
+		padding-block: var(--space-section);
 	}
 
 	.open-source-section .repo-filters {
