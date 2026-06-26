@@ -3,5 +3,6 @@ export const site = {
 	email: 'contact@michaelvanhorn.me',
 	linkedin: 'https://linkedin.com/in/michaelvanhorn06',
 	github: 'https://github.com/mike-vanhorn',
+	githubUser: 'mike-vanhorn',
 	location: 'Twin Cities, MN',
 } as const;

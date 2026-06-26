@@ -1,0 +1,432 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { site } from '../data/site';
+import { useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	lang: Locale;
+}
+
+type GitHubRepo = {
+	name: string;
+	description: string | null;
+	language: string | null;
+	stargazers_count: number;
+	updated_at: string;
+	html_url: string;
+	archived: boolean;
+	fork: boolean;
+};
+
+type Repo = {
+	name: string;
+	description: string | null;
+	language: string | null;
+	stars: number;
+	updatedAt: string;
+	url: string;
+	archived: boolean;
+};
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const apiUrl = `https://api.github.com/users/${site.githubUser}/repos?type=owner&sort=updated&per_page=100`;
+
+const SEED_REPOS: Repo[] = [
+	{
+		name: 'michaelvanhorn-me',
+		description: 'Personal portfolio site for Michael Van Horn.',
+		language: 'TypeScript',
+		stars: 0,
+		updatedAt: '2026-06-25T00:00:00Z',
+		url: `${site.github}/michaelvanhorn-me`,
+		archived: false,
+	},
+	{
+		name: 'marked-in-red',
+		description: 'Awareness map for Missing and Murdered Indigenous Women, Girls, and Two-Spirit people.',
+		language: 'TypeScript',
+		stars: 0,
+		updatedAt: '2026-06-25T00:00:00Z',
+		url: `${site.github}/marked-in-red`,
+		archived: false,
+	},
+];
+
+function normalizeRepo(repo: GitHubRepo): Repo {
+	return {
+		name: repo.name,
+		description: repo.description,
+		language: repo.language,
+		stars: repo.stargazers_count,
+		updatedAt: repo.updated_at,
+		url: repo.html_url,
+		archived: repo.archived,
+	};
+}
+
+async function fetchRepos(): Promise<Repo[]> {
+	try {
+		const response = await fetch(apiUrl, {
+			headers: {
+				'User-Agent': 'michaelvanhorn-me-build',
+				Accept: 'application/vnd.github+json',
+			},
+		});
+
+		if (!response.ok) {
+			throw new Error(`GitHub API returned ${response.status}`);
+		}
+
+		const data = (await response.json()) as GitHubRepo[];
+		const repos = data
+			.filter((repo) => !repo.fork)
+			.map(normalizeRepo)
+			.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+
+		console.info(`[OpenSourceSection] GitHub fetch succeeded with ${repos.length} repos.`);
+		return repos.length > 0 ? repos : SEED_REPOS;
+	} catch (error) {
+		const reason = error instanceof Error ? error.message : 'unknown error';
+		console.warn(`[OpenSourceSection] GitHub fetch failed; using seed repos. ${reason}`);
+		return SEED_REPOS;
+	}
+}
+
+const repos = await fetchRepos();
+const labels = {
+	all: t('home.opensource.all'),
+	viewOnGitHub: t('home.opensource.viewOnGitHub'),
+	updated: t('home.opensource.updated'),
+	archived: t('home.opensource.archived'),
+	descFallback: t('home.opensource.descFallback'),
+	viewProfile: t('home.opensource.viewProfile'),
+	lang,
+	githubUrl: site.github,
+	apiUrl,
+};
+
+const json = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
+---
+
+<section class="home-section card-section open-source-section" aria-labelledby="open-source-title">
+	<div class="wide section-inner open-source-inner">
+		<SectionHeading
+			kicker={t('home.opensource.kicker')}
+			title={t('home.opensource.title')}
+			id="open-source-title"
+		/>
+		<div class="repo-filters" data-os-filters></div>
+		<div class="repo-grid" data-os-grid></div>
+		<script type="application/json" id="os-repos" set:html={json(repos)} />
+		<script type="application/json" id="os-labels" set:html={json(labels)} />
+		<noscript>
+			<a class="github-profile-link" href={site.github}>{t('home.opensource.viewProfile')} &rarr;</a>
+		</noscript>
+	</div>
+</section>
+
+<script is:inline>
+	(() => {
+		const reposEl = document.getElementById('os-repos');
+		const labelsEl = document.getElementById('os-labels');
+		const grid = document.querySelector('[data-os-grid]');
+		const filters = document.querySelector('[data-os-filters]');
+
+		if (!reposEl || !labelsEl || !grid || !filters) return;
+
+		const labels = JSON.parse(labelsEl.textContent || '{}');
+		const languageColors = {
+			TypeScript: '#2F6DB0',
+			JavaScript: '#C9A227',
+			Python: '#4B7B3A',
+			HTML: '#B5532A',
+		};
+		let repos = JSON.parse(reposEl.textContent || '[]');
+		let activeLanguage = 'all';
+
+		function escapeHtml(value) {
+			return String(value ?? '').replace(/[&<>"']/g, (char) => {
+				return {
+					'&': '&amp;',
+					'<': '&lt;',
+					'>': '&gt;',
+					'"': '&quot;',
+					"'": '&#39;',
+				}[char];
+			});
+		}
+
+		function languageLabel(language) {
+			return language || '—';
+		}
+
+		function fallbackDescription(repo) {
+			const language = languageLabel(repo.language);
+			return labels.descFallback.replace('{language}', language);
+		}
+
+		function relativeUpdated(updatedAt) {
+			const then = new Date(updatedAt);
+			if (Number.isNaN(then.getTime())) return '';
+
+			const diffSeconds = Math.round((then.getTime() - Date.now()) / 1000);
+			const ranges = [
+				['year', 60 * 60 * 24 * 365],
+				['month', 60 * 60 * 24 * 30],
+				['week', 60 * 60 * 24 * 7],
+				['day', 60 * 60 * 24],
+				['hour', 60 * 60],
+				['minute', 60],
+			];
+			const formatter = new Intl.RelativeTimeFormat(labels.lang || 'en', { numeric: 'auto' });
+			for (const [unit, seconds] of ranges) {
+				if (Math.abs(diffSeconds) >= seconds || unit === 'minute') {
+					return formatter.format(Math.round(diffSeconds / seconds), unit);
+				}
+			}
+			return formatter.format(0, 'minute');
+		}
+
+		function renderCard(repo, labels) {
+			const lang = languageLabel(repo.language);
+			const dotColor = languageColors[repo.language] || '#8B8378';
+			const description = repo.description || fallbackDescription(repo);
+			const stars =
+				Number(repo.stars) > 0
+					? `<span class="repo-meta-item"><span class="ti ti-star" aria-hidden="true"></span>${new Intl.NumberFormat(labels.lang || 'en').format(repo.stars)}</span>`
+					: '';
+			const archived = repo.archived ? `<span class="repo-tag">${escapeHtml(labels.archived)}</span>` : '';
+
+			return `
+				<a class="repo-card" href="${escapeHtml(repo.url)}" aria-label="${escapeHtml(`${repo.name} ${labels.viewOnGitHub}`)}">
+					<div class="repo-card-head">
+						<h3>${escapeHtml(repo.name)}</h3>
+						<span class="repo-language">
+							<span class="repo-language-dot" style="--dot-color: ${escapeHtml(dotColor)}"></span>
+							${escapeHtml(lang)}
+						</span>
+					</div>
+					<p>${escapeHtml(description)}</p>
+					<div class="repo-meta">
+						${stars}
+						<span class="repo-meta-item">${escapeHtml(labels.updated)} ${escapeHtml(relativeUpdated(repo.updatedAt))}</span>
+						<span class="repo-meta-item repo-view">${escapeHtml(labels.viewOnGitHub)} <span class="ti ti-external-link" aria-hidden="true"></span></span>
+						${archived}
+					</div>
+				</a>
+			`;
+		}
+
+		function visibleRepos() {
+			return activeLanguage === 'all' ? repos : repos.filter((repo) => repo.language === activeLanguage);
+		}
+
+		function renderGrid() {
+			const cards = visibleRepos();
+			grid.innerHTML = cards.length
+				? cards.map((repo) => renderCard(repo, labels)).join('')
+				: `<a class="github-profile-link" href="${escapeHtml(labels.githubUrl)}">${escapeHtml(labels.viewProfile)} &rarr;</a>`;
+		}
+
+		function renderChips(nextRepos) {
+			const languages = [...new Set(nextRepos.map((repo) => repo.language).filter(Boolean))].sort((a, b) =>
+				a.localeCompare(b, labels.lang || 'en')
+			);
+			const chips = ['all', ...languages];
+			if (activeLanguage !== 'all' && !languages.includes(activeLanguage)) {
+				activeLanguage = 'all';
+			}
+
+			filters.innerHTML = chips
+				.map((chip) => {
+					const isActive = chip === activeLanguage;
+					const label = chip === 'all' ? labels.all : chip;
+					return `<button class="repo-chip" type="button" data-language="${escapeHtml(chip)}" aria-pressed="${isActive}">${escapeHtml(label)}</button>`;
+				})
+				.join('');
+
+			filters.querySelectorAll('button').forEach((button) => {
+				button.addEventListener('click', () => {
+					activeLanguage = button.dataset.language || 'all';
+					renderChips(repos);
+					renderGrid();
+				});
+			});
+		}
+
+		function render(nextRepos) {
+			repos = [...nextRepos].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+			renderChips(repos);
+			renderGrid();
+		}
+
+		render(repos);
+
+		fetch(labels.apiUrl, { headers: { Accept: 'application/vnd.github+json' } })
+			.then((response) => {
+				if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
+				return response.json();
+			})
+			.then((data) => {
+				const liveRepos = data
+					.filter((repo) => !repo.fork)
+					.map((repo) => ({
+						name: repo.name,
+						description: repo.description,
+						language: repo.language,
+						stars: repo.stargazers_count,
+						updatedAt: repo.updated_at,
+						url: repo.html_url,
+						archived: repo.archived,
+					}));
+				if (liveRepos.length > 0) render(liveRepos);
+			})
+			.catch(() => {});
+	})();
+</script>
+
+<style is:global>
+	.open-source-section .open-source-inner {
+		gap: 1.5rem;
+	}
+
+	.open-source-section .repo-filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		min-height: 2rem;
+	}
+
+	.open-source-section .repo-chip {
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		background: var(--card);
+		color: var(--ink);
+		cursor: pointer;
+		font: inherit;
+		font-size: 0.88rem;
+		line-height: 1;
+		padding: 0.5rem 0.75rem;
+	}
+
+	.open-source-section .repo-chip[aria-pressed='true'] {
+		border-color: var(--ink);
+		background: var(--ink);
+		color: var(--paper);
+	}
+
+	.open-source-section .repo-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.open-source-section .repo-card {
+		display: grid;
+		gap: 0.9rem;
+		min-height: 100%;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: var(--card);
+		color: var(--ink);
+		padding: 1.25rem;
+		text-decoration: none;
+	}
+
+	.open-source-section .repo-card:hover {
+		border-color: var(--clay);
+		text-decoration: none;
+	}
+
+	.open-source-section .repo-card-head {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: start;
+		gap: 1rem;
+	}
+
+	.open-source-section .repo-card h3 {
+		font-size: 1.35rem;
+		overflow-wrap: anywhere;
+	}
+
+	.open-source-section .repo-card p {
+		color: var(--muted);
+		font-size: 0.98rem;
+	}
+
+	.open-source-section .repo-language,
+	.open-source-section .repo-meta,
+	.open-source-section .repo-meta-item,
+	.open-source-section .repo-tag {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.open-source-section .repo-language {
+		gap: 0.35rem;
+		color: var(--muted);
+		font-size: 0.84rem;
+		white-space: nowrap;
+	}
+
+	.open-source-section .repo-language-dot {
+		width: 0.58rem;
+		height: 0.58rem;
+		border-radius: 999px;
+		background: var(--dot-color);
+	}
+
+	.open-source-section .repo-meta {
+		flex-wrap: wrap;
+		gap: 0.55rem 0.85rem;
+		color: var(--muted);
+		font-size: 0.84rem;
+		margin-top: auto;
+	}
+
+	.open-source-section .repo-meta-item {
+		gap: 0.25rem;
+	}
+
+	.open-source-section .repo-view {
+		color: var(--clay);
+	}
+
+	.open-source-section .ti-star::before {
+		content: '\2605';
+	}
+
+	.open-source-section .ti-external-link::before {
+		content: '\2197';
+	}
+
+	.open-source-section .repo-tag {
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		color: var(--muted);
+		font-size: 0.76rem;
+		padding: 0.18rem 0.45rem;
+	}
+
+	.open-source-section .github-profile-link {
+		color: var(--clay);
+		font-weight: 600;
+	}
+
+	@media (max-width: 760px) {
+		.open-source-section .repo-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.open-source-section .repo-card-head {
+			grid-template-columns: 1fr;
+			gap: 0.5rem;
+		}
+
+		.open-source-section .repo-language {
+			justify-self: start;
+		}
+	}
+</style>

@@ -4,6 +4,7 @@ import Button from '../Button.astro';
 import ContactBand from '../ContactBand.astro';
 import ExperienceItem from '../ExperienceItem.astro';
 import PageLayout from '../../layouts/PageLayout.astro';
+import OpenSourceSection from '../OpenSourceSection.astro';
 import ProjectCard from '../ProjectCard.astro';
 import SectionHeading from '../SectionHeading.astro';
 import headshot from '../../assets/headshot.png';
@@ -96,6 +97,8 @@ const to = (path: string) => localizePath(path, lang);
 			</div>
 		</div>
 	</section>
+
+	<OpenSourceSection lang={lang} />
 
 	<section class="home-section" aria-labelledby="writing-title">
 		<div class="wide section-inner writing-inner">

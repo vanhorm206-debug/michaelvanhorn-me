@@ -69,6 +69,14 @@ export const ui = {
 		'home.work.obsidianAi.blurb':
 			'Personal AI memory + agent system with knowledge files, hooks, skills, and a Townfolk agent layer.',
 		'home.work.cta': 'See all work',
+		'home.opensource.kicker': 'Open source',
+		'home.opensource.title': 'Built in public',
+		'home.opensource.all': 'All',
+		'home.opensource.viewOnGitHub': 'view on GitHub',
+		'home.opensource.updated': 'updated',
+		'home.opensource.archived': 'archived',
+		'home.opensource.descFallback': '{language} repository',
+		'home.opensource.viewProfile': 'View my GitHub',
 		'home.writing.kicker': 'Writing',
 		'home.writing.title': 'Notes on AI and the future of work.',
 		'home.writing.body': 'Short pieces on AI adoption, job stress, and keeping the human side in view.',
@@ -257,6 +265,14 @@ export const ui = {
 		'home.work.obsidianAi.blurb':
 			'Hệ thống trí nhớ AI cá nhân và tác tử với tệp tri thức, hook, skill và lớp tác tử Townfolk.',
 		'home.work.cta': 'Xem tất cả dự án',
+		'home.opensource.kicker': 'Mã nguồn mở',
+		'home.opensource.title': 'Xây dựng công khai',
+		'home.opensource.all': 'Tất cả',
+		'home.opensource.viewOnGitHub': 'xem trên GitHub',
+		'home.opensource.updated': 'cập nhật',
+		'home.opensource.archived': 'đã lưu trữ',
+		'home.opensource.descFallback': 'Repo {language}',
+		'home.opensource.viewProfile': 'Xem GitHub của tôi',
 		'home.writing.kicker': 'Bài viết',
 		'home.writing.title': 'Ghi chú về AI và tương lai của công việc.',
 		'home.writing.body':
@@ -448,6 +464,14 @@ export const ui = {
 		'home.work.obsidianAi.blurb':
 			'Sistema personal de memoria de IA y agentes con archivos de conocimiento, hooks, skills y una capa de agentes Townfolk.',
 		'home.work.cta': 'Ver todo el trabajo',
+		'home.opensource.kicker': 'Código abierto',
+		'home.opensource.title': 'Construido en público',
+		'home.opensource.all': 'Todo',
+		'home.opensource.viewOnGitHub': 'ver en GitHub',
+		'home.opensource.updated': 'actualizado',
+		'home.opensource.archived': 'archivado',
+		'home.opensource.descFallback': 'Repositorio de {language}',
+		'home.opensource.viewProfile': 'Ver mi GitHub',
 		'home.writing.kicker': 'Escritura',
 		'home.writing.title': 'Notas sobre IA y el futuro del trabajo.',
 		'home.writing.body':
@@ -802,7 +826,8 @@ export function getLangFromUrl(url: URL): Locale {
 
 export function useTranslations(lang: Locale) {
 	return function t(key: TranslationKey): string {
-		return ui[lang][key] ?? ui[defaultLang][key];
+		const localeUi = ui[lang] as Partial<Record<TranslationKey, string>>;
+		return localeUi[key] ?? ui[defaultLang][key];
 	};
 }
 
