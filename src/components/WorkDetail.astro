@@ -1,5 +1,6 @@
 ---
 import { render } from 'astro:content';
+import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Button from './Button.astro';
 import PageLayout from '../layouts/PageLayout.astro';
@@ -46,6 +47,23 @@ const backHref = localizePath('/work', lang);
 		</header>
 
 		<div class="prose detail-body">
+			{
+				project.data.image && (
+					<figure class="detail-badge">
+						<Image
+							src={project.data.image}
+							alt={project.data.imageAlt ?? project.data.title}
+							width={400}
+							height={400}
+							format="webp"
+							widths={[160, 200, 280, 400]}
+							sizes="(min-width: 600px) 200px, 160px"
+							class="detail-badge-image"
+							loading="eager"
+						/>
+					</figure>
+				)
+			}
 			<Content />
 		</div>
 	</article>
@@ -114,6 +132,16 @@ const backHref = localizePath('/work', lang);
 	.detail-body {
 		display: grid;
 		gap: 1.15rem;
+	}
+
+	.detail-badge {
+		margin: 0 0 0.5rem;
+		justify-self: center;
+	}
+
+	.detail-badge-image {
+		width: clamp(150px, 26vw, 200px);
+		height: auto;
 	}
 
 	.detail-body :global(p) {
