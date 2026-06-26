@@ -170,7 +170,7 @@ const json = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 			const then = new Date(updatedAt);
 			if (Number.isNaN(then.getTime())) return '';
 
-			const diffSeconds = Math.round((then.getTime() - Date.now()) / 1000);
+			const diffSeconds = Math.round((Date.now() - then.getTime()) / 1000);
 			const ranges = [
 				['year', 60 * 60 * 24 * 365],
 				['month', 60 * 60 * 24 * 30],
