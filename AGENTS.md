@@ -34,6 +34,7 @@ These override anything in the historical design spec/plan that conflicts.
 - **Waaban:** public copy describes it ONLY as an "AI-powered market-analysis platform." Never mention a trading terminal, HMM / regime detection, hosting, or co-founder names anywhere public.
 - **Public contact:** a single email, `contact@michaelvanhorn.me`. Do not expose a personal Gmail, phone number, or street address.
 - **Research:** `/research` is an abstract-only summary of a co-authored manuscript (full paper available on request). Do not host the full manuscript.
+- **Home layout:** `--maxw-wide` is 1280px (not 980px). The home page order is Hero → Featured Research → Selected Work → Marked in Red → Writing → Recommendation → Contact. Marked in Red intentionally has no top-level nav item; it is featured on Home and remains reachable through Work.
 - **Internationalization (i18n):** the site is multilingual — English (default, **unprefixed** URLs), **Vietnamese** (`/vi/…`), **Spanish** (`/es/…`), **Ojibwe / Anishinaabemowin** (`/oj/…`) — via Astro native i18n + a no-JS `<details>` language switcher (`src/components/LangSwitcher.astro`). Hard constraints:
   - Do NOT change `astro.config` `i18n.routing.prefixDefaultLocale: false` — English URLs must stay unprefixed (SEO + existing links).
   - Do NOT change `build.format: 'file'` or `vercel.json` `cleanUrls`/`trailingSlash`. Nested locale routes (`/vi/work/<slug>`) emit `vi/work/<slug>.html` and rely on the existing cleanUrls mapping; breaking it 404s the locale routes (same class of bug as the earlier site-wide 404).

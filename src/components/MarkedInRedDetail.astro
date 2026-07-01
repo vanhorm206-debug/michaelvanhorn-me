@@ -1,0 +1,299 @@
+---
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import markedMap from '../assets/marked-in-red-map.png';
+import { localizePath, useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	lang: Locale;
+	project: CollectionEntry<'work'>;
+}
+
+const { lang, project } = Astro.props;
+const t = useTranslations(lang);
+const { Content } = await render(project);
+const pageTitle = `${project.data.title} · ${t('work.kicker')} · Michael Van Horn`;
+const description = project.data.summary;
+const backHref = localizePath('/work', lang);
+const primaryLink = project.data.links?.[0];
+const secondaryLink = project.data.links?.[1];
+---
+
+<PageLayout title={pageTitle} description={description}>
+	<article class="work-detail marked-detail">
+		<header class="wide detail-header">
+			<a class="back-link" href={backHref}>{t('work.back')}</a>
+			<div class="marked-hero">
+				<div class="marked-copy">
+					<div class="page-heading">
+						<p class="kicker">{t('home.markedInRed.kicker')}</p>
+						<h1>{project.data.title}</h1>
+					</div>
+					<div class="project-meta" aria-label={t('work.metaAria')}>
+						<span>{project.data.role}</span>
+						<span>{project.data.dates}</span>
+						{project.data.status && <span class="status">{project.data.status}</span>}
+					</div>
+					<p>{project.data.summary}</p>
+					{
+						(primaryLink || secondaryLink) && (
+							<div class="link-row" aria-label={t('work.linksAria')}>
+								{primaryLink && <a class="marked-button primary" href={primaryLink.url}>{primaryLink.label}</a>}
+								{secondaryLink && <a class="marked-button secondary" href={secondaryLink.url}>{secondaryLink.label}</a>}
+							</div>
+						)
+					}
+				</div>
+				<figure class="map-preview">
+					<Image
+						src={markedMap}
+						alt={t('home.markedInRed.mapAlt')}
+						widths={[400, 640, 900, 1280]}
+						sizes="(min-width: 820px) 42vw, 92vw"
+						class="map-image"
+						loading="eager"
+					/>
+				</figure>
+			</div>
+		</header>
+
+		<div class="prose detail-body">
+			{
+				project.data.image && (
+					<figure class="detail-badge">
+						<Image
+							src={project.data.image}
+							alt={project.data.imageAlt ?? project.data.title}
+							width={400}
+							height={400}
+							format="webp"
+							widths={[160, 200, 280, 400]}
+							sizes="(min-width: 600px) 200px, 160px"
+							class="detail-badge-image"
+							loading="eager"
+						/>
+					</figure>
+				)
+			}
+			<Content />
+		</div>
+	</article>
+</PageLayout>
+
+<style>
+	.work-detail {
+		background: var(--paper);
+		border-bottom: 1px solid var(--line);
+		padding-block: var(--space-section);
+	}
+
+	.detail-header {
+		display: grid;
+		gap: 1rem;
+		margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+	}
+
+	.marked-hero {
+		display: grid;
+		gap: clamp(1.5rem, 4vw, 2.5rem);
+		align-items: center;
+		border-left: 4px solid #b70011;
+		padding: clamp(1.25rem, 3vw, 2rem);
+	}
+
+	.marked-copy {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.page-heading {
+		display: grid;
+		gap: 0.55rem;
+	}
+
+	.page-heading h1 {
+		font-size: clamp(1.8rem, 5vw, 3rem);
+		letter-spacing: 0;
+	}
+
+	.kicker {
+		width: fit-content;
+		border: 1px solid color-mix(in srgb, #b70011 28%, var(--line));
+		border-radius: 999px;
+		color: #b70011;
+		padding: 0.3rem 0.55rem;
+	}
+
+	.back-link {
+		width: fit-content;
+		color: #b70011;
+		font-size: 0.95rem;
+		font-weight: 600;
+		text-decoration-thickness: 1px;
+	}
+
+	.detail-header p:not(.kicker) {
+		color: var(--muted);
+		font-size: clamp(1.05rem, 2vw, 1.2rem);
+	}
+
+	.project-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
+		color: var(--muted);
+		font-size: 0.95rem;
+	}
+
+	.status {
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		color: var(--green);
+		font-weight: 600;
+		line-height: 1.2;
+		padding: 0.2rem 0.45rem;
+	}
+
+	.link-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 0.25rem;
+	}
+
+	.marked-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 2.6rem;
+		border: 1px solid #b70011;
+		border-radius: var(--radius);
+		font-size: 0.95rem;
+		font-weight: 600;
+		line-height: 1.1;
+		padding: 9px 18px;
+		text-decoration: none;
+		transition:
+			background-color 150ms ease,
+			color 150ms ease,
+			border-color 150ms ease;
+	}
+
+	.marked-button.primary {
+		background: #b70011;
+		color: var(--paper);
+	}
+
+	.marked-button.secondary {
+		border-color: var(--ink);
+		background: transparent;
+		color: var(--ink);
+	}
+
+	.marked-button:hover {
+		text-decoration: none;
+	}
+
+	.marked-button.primary:hover {
+		background: var(--ink);
+		border-color: var(--ink);
+		color: var(--paper);
+	}
+
+	.marked-button.secondary:hover {
+		background: color-mix(in srgb, var(--ink) 8%, transparent);
+	}
+
+	.map-preview {
+		position: relative;
+		min-height: clamp(260px, 32vw, 420px);
+		margin: 0;
+		overflow: hidden;
+		border: 1px solid color-mix(in srgb, #b70011 30%, var(--line));
+		border-radius: var(--radius);
+		background: color-mix(in srgb, var(--card) 72%, var(--paper));
+	}
+
+	.map-image {
+		position: absolute;
+		inset: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.detail-body {
+		display: grid;
+		gap: 1.15rem;
+	}
+
+	.detail-badge {
+		margin: 0 0 0.5rem;
+		justify-self: center;
+	}
+
+	.detail-badge-image {
+		width: clamp(150px, 26vw, 200px);
+		height: auto;
+	}
+
+	.detail-body :global(p) {
+		color: var(--ink);
+		font-size: clamp(1.05rem, 2vw, 1.18rem);
+	}
+
+	.detail-body :global(h2) {
+		font-size: clamp(1.5rem, 3vw, 2rem);
+		margin-top: 0.75rem;
+	}
+
+	.detail-body :global(h3) {
+		font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+		margin-top: 0.5rem;
+	}
+
+	.detail-body :global(a) {
+		color: var(--clay);
+	}
+
+	.detail-body :global(ul),
+	.detail-body :global(ol) {
+		display: grid;
+		gap: 0.5rem;
+		margin: 0;
+		padding-left: 1.4rem;
+		color: var(--ink);
+		font-size: clamp(1.05rem, 2vw, 1.18rem);
+	}
+
+	.detail-body :global(li) {
+		padding-left: 0.25rem;
+	}
+
+	.detail-body :global(blockquote) {
+		margin: 0;
+		border-left: 3px solid var(--clay);
+		padding-left: 1.15rem;
+		color: var(--muted);
+		font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+		font-style: italic;
+	}
+
+	.detail-body :global(code) {
+		background: var(--card);
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		padding: 0.1rem 0.35rem;
+		font-size: 0.9em;
+	}
+
+	@media (min-width: 820px) {
+		.marked-hero {
+			grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.75fr);
+		}
+	}
+</style>

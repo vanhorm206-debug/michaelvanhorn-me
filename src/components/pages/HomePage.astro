@@ -2,9 +2,8 @@
 import { Image } from 'astro:assets';
 import Button from '../Button.astro';
 import ContactBand from '../ContactBand.astro';
-import ExperienceItem from '../ExperienceItem.astro';
+import MarkedInRedSection from '../MarkedInRedSection.astro';
 import PageLayout from '../../layouts/PageLayout.astro';
-import OpenSourceSection from '../OpenSourceSection.astro';
 import ProjectCard from '../ProjectCard.astro';
 import SectionHeading from '../SectionHeading.astro';
 import headshot from '../../assets/headshot.png';
@@ -28,6 +27,8 @@ const to = (path: string) => localizePath(path, lang);
 					{t('home.hero.heading.before')}<em>{t('home.hero.heading.emphasis')}</em>{t('home.hero.heading.after')}
 				</h1>
 				<p class="hero-copy">{t('home.meta.description')}</p>
+				<p class="hero-copy identity-copy">{t('home.why.statement')}</p>
+				<p class="current-roles">{t('home.hero.currentRoles')}</p>
 				<div class="actions" aria-label={t('home.actions.label')}>
 					<Button href={to('/work')}>{t('home.actions.work')}</Button>
 					<Button href={to('/contact')} variant="ghost">{t('home.actions.contact')}</Button>
@@ -47,13 +48,6 @@ const to = (path: string) => localizePath(path, lang);
 					fetchpriority="high"
 				/>
 			</div>
-		</div>
-	</section>
-
-	<section class="home-section card-section why-section" aria-label={t('home.why.aria')}>
-		<div class="wide section-inner">
-			<SectionHeading kicker={t('home.why.kicker')} accent="green" />
-			<p class="statement">{t('home.why.statement')}</p>
 		</div>
 	</section>
 
@@ -80,11 +74,6 @@ const to = (path: string) => localizePath(path, lang);
 			/>
 			<div class="project-grid">
 				<ProjectCard name="Waaban" blurb={t('home.work.waaban.blurb')} href={to('/work/waaban')} />
-				<ProjectCard
-					name="Marked in Red"
-					blurb={t('home.work.markedInRed.blurb')}
-					href={to('/work/marked-in-red')}
-				/>
 				<ProjectCard name="Woodhouse" blurb={t('home.work.woodhouse.blurb')} href={to('/work/woodhouse')} />
 				<ProjectCard
 					name="Obsidian AI"
@@ -98,29 +87,14 @@ const to = (path: string) => localizePath(path, lang);
 		</div>
 	</section>
 
+	<MarkedInRedSection lang={lang} />
+
 	<section class="home-section" aria-labelledby="writing-title">
 		<div class="wide section-inner writing-inner">
 			<SectionHeading kicker={t('home.writing.kicker')} title={t('home.writing.title')} id="writing-title" />
 			<p>{t('home.writing.body')}</p>
 			<div class="actions">
 				<Button href={to('/writing')}>{t('home.writing.cta')}</Button>
-			</div>
-		</div>
-	</section>
-
-	<section class="home-section card-section" aria-labelledby="experience-title">
-		<div class="wide section-inner experience-inner">
-			<SectionHeading
-				kicker={t('home.experience.kicker')}
-				title={t('home.experience.title')}
-				id="experience-title"
-			/>
-			<div class="experience-list">
-				<ExperienceItem org="Meet Minneapolis" role={t('home.experience.meetMinneapolis.role')} dates="2026–" />
-				<ExperienceItem org="Waaban" role={t('home.experience.waaban.role')} dates="2026–" />
-			</div>
-			<div class="actions">
-				<Button href="/resume.pdf" variant="ghost">{t('home.experience.resume')}</Button>
 			</div>
 		</div>
 	</section>
@@ -145,8 +119,6 @@ const to = (path: string) => localizePath(path, lang);
 			</figure>
 		</div>
 	</section>
-
-	<OpenSourceSection lang={lang} />
 
 	<ContactBand title={t('home.contact.title')} />
 </PageLayout>
@@ -209,6 +181,20 @@ const to = (path: string) => localizePath(path, lang);
 		font-size: clamp(1.08rem, 2vw, 1.28rem);
 	}
 
+	.identity-copy {
+		color: var(--ink);
+	}
+
+	.current-roles {
+		width: fit-content;
+		border-left: 2px solid var(--clay);
+		color: var(--ink);
+		font-size: 0.95rem;
+		font-weight: 600;
+		line-height: 1.35;
+		padding-left: 0.85rem;
+	}
+
 	.statement {
 		max-width: 860px;
 		color: var(--ink);
@@ -219,8 +205,7 @@ const to = (path: string) => localizePath(path, lang);
 	}
 
 	.research-inner,
-	.writing-inner,
-	.experience-inner {
+	.writing-inner {
 		max-width: var(--maxw-prose);
 		margin-inline: auto;
 	}
@@ -237,12 +222,8 @@ const to = (path: string) => localizePath(path, lang);
 
 	.project-grid {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1rem;
-	}
-
-	.experience-list {
-		display: grid;
 	}
 
 	.actions {

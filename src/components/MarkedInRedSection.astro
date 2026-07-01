@@ -1,0 +1,166 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import SectionHeading from './SectionHeading.astro';
+import markedMap from '../assets/marked-in-red-map.png';
+import { localeFromEntryId, type Locale, useTranslations } from '../i18n/ui';
+
+interface Props {
+	lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const contentLang = lang === 'oj' ? 'en' : lang;
+const projects = await getCollection('work');
+const markedInRed = projects.find((project) => {
+	const parsed = localeFromEntryId(project.id);
+	return parsed.locale === contentLang && parsed.slug === 'marked-in-red';
+});
+
+if (!markedInRed) {
+	throw new Error(`Missing Marked in Red content for locale "${contentLang}".`);
+}
+
+const liveDemoLink = markedInRed.data.links?.[0];
+const sourceLink = markedInRed.data.links?.[1];
+---
+
+<section class="home-section card-section marked-in-red-section" aria-labelledby="marked-in-red-title">
+	<div class="wide section-inner">
+		<div class="marked-card">
+			<div class="marked-copy">
+				<SectionHeading
+					kicker={t('home.markedInRed.kicker')}
+					title={markedInRed.data.title}
+					id="marked-in-red-title"
+				/>
+				<p>{markedInRed.data.summary}</p>
+				<div class="marked-actions" aria-label={t('work.linksAria')}>
+					{liveDemoLink && <a class="marked-button primary" href={liveDemoLink.url}>{liveDemoLink.label}</a>}
+					{sourceLink && <a class="marked-button secondary" href={sourceLink.url}>{sourceLink.label}</a>}
+				</div>
+			</div>
+			<figure class="map-preview">
+				<Image
+					src={markedMap}
+					alt={t('home.markedInRed.mapAlt')}
+					widths={[400, 640, 900, 1280]}
+					sizes="(min-width: 820px) 40vw, 90vw"
+					class="map-image"
+					loading="lazy"
+				/>
+			</figure>
+		</div>
+	</div>
+</section>
+
+<style>
+	.marked-in-red-section {
+		border-bottom: 1px solid var(--line);
+		background: var(--paper);
+	}
+
+	.marked-card {
+		display: grid;
+		gap: clamp(1.5rem, 4vw, 2.5rem);
+		align-items: center;
+		border-left: 4px solid #b70011;
+		background: var(--paper);
+		padding: clamp(1.25rem, 3vw, 2rem);
+	}
+
+	.marked-copy {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.marked-copy :global(.kicker) {
+		width: fit-content;
+		border: 1px solid color-mix(in srgb, #b70011 28%, var(--line));
+		border-radius: 999px;
+		color: #b70011;
+		padding: 0.3rem 0.55rem;
+	}
+
+	.marked-copy p {
+		max-width: 680px;
+		color: var(--muted);
+		font-size: clamp(1rem, 2vw, 1.12rem);
+	}
+
+	.marked-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.marked-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 2.6rem;
+		border: 1px solid #b70011;
+		border-radius: var(--radius);
+		font-size: 0.95rem;
+		font-weight: 600;
+		line-height: 1.1;
+		padding: 9px 18px;
+		text-decoration: none;
+		transition:
+			background-color 150ms ease,
+			color 150ms ease,
+			border-color 150ms ease;
+	}
+
+	.marked-button.primary {
+		background: #b70011;
+		color: var(--paper);
+	}
+
+	.marked-button.secondary {
+		border-color: var(--ink);
+		background: transparent;
+		color: var(--ink);
+	}
+
+	.marked-button:hover {
+		text-decoration: none;
+	}
+
+	.marked-button.primary:hover {
+		background: var(--ink);
+		border-color: var(--ink);
+		color: var(--paper);
+	}
+
+	.marked-button.secondary:hover {
+		background: color-mix(in srgb, var(--ink) 8%, transparent);
+	}
+
+	.map-preview {
+		position: relative;
+		min-height: clamp(220px, 28vw, 340px);
+		margin: 0;
+		overflow: hidden;
+		border: 1px solid color-mix(in srgb, #b70011 30%, var(--line));
+		border-radius: var(--radius);
+		background: color-mix(in srgb, var(--card) 72%, var(--paper));
+	}
+
+	.map-image {
+		position: absolute;
+		inset: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	@media (min-width: 820px) {
+		.marked-card {
+			grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.75fr);
+		}
+	}
+</style>

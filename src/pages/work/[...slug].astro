@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import MarkedInRedDetail from '../../components/MarkedInRedDetail.astro';
 import WorkDetail from '../../components/WorkDetail.astro';
 import { localeFromEntryId } from '../../i18n/ui';
 
@@ -15,6 +16,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+const isMarkedInRed = localeFromEntryId(project.id).slug === 'marked-in-red';
 ---
 
-<WorkDetail lang="en" project={project} />
+{isMarkedInRed ? <MarkedInRedDetail lang="en" project={project} /> : <WorkDetail lang="en" project={project} />}

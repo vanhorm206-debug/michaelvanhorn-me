@@ -11,7 +11,7 @@
   --font-sans:  "Inter Variable", system-ui, -apple-system, sans-serif;
 
   --maxw-prose:  720px;
-  --maxw-wide:   980px;
+  --maxw-wide:   1280px;
   --space-section: clamp(2.5rem, 6vw, 4.5rem);
   --radius: 4px;
 }

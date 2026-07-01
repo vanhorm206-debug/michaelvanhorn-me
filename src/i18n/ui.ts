@@ -47,11 +47,10 @@ export const ui = {
 		'home.hero.heading.before': 'I help people and organizations work ',
 		'home.hero.heading.emphasis': 'well',
 		'home.hero.heading.after': ' with AI.',
+		'home.hero.currentRoles': 'Currently: Meet Minneapolis · Waaban',
 		'home.actions.label': 'Homepage actions',
 		'home.actions.work': 'Read the work',
 		'home.actions.contact': 'Get in touch',
-		'home.why.aria': 'Why this work',
-		'home.why.kicker': 'Why this work',
 		'home.why.statement':
 			"I'm Anishinaabe, a Red Lake Nation descendant, and I came to AI through people: who it helps, who it leaves out, and how organizations bring their communities along as work changes.",
 		'home.research.kicker': 'Featured · Research',
@@ -62,13 +61,14 @@ export const ui = {
 		'home.work.kicker': 'Selected work',
 		'home.work.title': 'Built projects at the edge of AI and work.',
 		'home.work.waaban.blurb': 'AI-powered market-analysis platform. Co-founder & CEO.',
-		'home.work.markedInRed.blurb':
-			'Awareness map for Missing and Murdered Indigenous Women, Girls, and Two-Spirit people. Scoped, designed, and shipped end to end.',
 		'home.work.woodhouse.blurb':
 			'Self-built task manager replacing Asana. A local dashboard backed by a private GitHub repo via an Express proxy.',
 		'home.work.obsidianAi.blurb':
 			'Personal AI memory + agent system with knowledge files, hooks, skills, and a Townfolk agent layer.',
 		'home.work.cta': 'See all work',
+		'home.markedInRed.kicker': 'MMIWG2S awareness map',
+		'home.markedInRed.mapAlt':
+			'The Marked in Red awareness map, showing sample case markers across the United States and Canada.',
 		'home.opensource.kicker': 'Open source',
 		'home.opensource.title': 'Built in public',
 		'home.opensource.all': 'All',
@@ -84,11 +84,6 @@ export const ui = {
 		'home.writing.title': 'Notes on AI and the future of work.',
 		'home.writing.body': 'Short pieces on AI adoption, job stress, and keeping the human side in view.',
 		'home.writing.cta': 'Read the writing',
-		'home.experience.kicker': 'Experience',
-		'home.experience.title': 'Where I am putting the work into practice.',
-		'home.experience.meetMinneapolis.role': 'Equity & Community Impact',
-		'home.experience.waaban.role': 'Co-founder & CEO',
-		'home.experience.resume': 'Download résumé (PDF)',
 		'home.recommendation.kicker': 'Recommendation',
 		'home.recommendation.title': "What it's like to work with me.",
 		'home.recommendation.quote1':
@@ -248,11 +243,10 @@ export const ui = {
 		'home.hero.heading.before': 'Tôi giúp con người và tổ chức làm việc ',
 		'home.hero.heading.emphasis': 'tốt',
 		'home.hero.heading.after': ' cùng AI.',
+		'home.hero.currentRoles': 'Hiện tại: Meet Minneapolis · Waaban',
 		'home.actions.label': 'Hành động trên trang chủ',
 		'home.actions.work': 'Đọc các dự án',
 		'home.actions.contact': 'Liên hệ',
-		'home.why.aria': 'Vì sao tôi làm công việc này',
-		'home.why.kicker': 'Vì sao công việc này',
 		'home.why.statement':
 			'Tôi là người Anishinaabe, hậu duệ của Red Lake Nation, và tôi đến với AI qua con người: AI giúp ai, bỏ sót ai, và các tổ chức đưa cộng đồng của mình đi cùng như thế nào khi công việc thay đổi.',
 		'home.research.kicker': 'Nổi bật · Nghiên cứu',
@@ -263,13 +257,14 @@ export const ui = {
 		'home.work.kicker': 'Dự án chọn lọc',
 		'home.work.title': 'Những dự án được xây ở ranh giới giữa AI và công việc.',
 		'home.work.waaban.blurb': 'Nền tảng phân tích thị trường được hỗ trợ bởi AI. Đồng sáng lập & CEO.',
-		'home.work.markedInRed.blurb':
-			'Bản đồ nâng cao nhận thức về Phụ nữ, Trẻ em gái và Người Two-Spirit Bản địa bị mất tích và bị sát hại. Phạm vi, thiết kế và triển khai trọn vẹn từ đầu đến cuối.',
 		'home.work.woodhouse.blurb':
 			'Công cụ quản lý tác vụ tự xây để thay thế Asana. Một bảng điều khiển cục bộ được hỗ trợ bởi repo GitHub riêng thông qua proxy Express.',
 		'home.work.obsidianAi.blurb':
 			'Hệ thống trí nhớ AI cá nhân và tác tử với tệp tri thức, hook, skill và lớp tác tử Townfolk.',
 		'home.work.cta': 'Xem tất cả dự án',
+		'home.markedInRed.kicker': 'Bản đồ nâng cao nhận thức MMIWG2S',
+		'home.markedInRed.mapAlt':
+			'Bản đồ nâng cao nhận thức Marked in Red, hiển thị các điểm đánh dấu trường hợp mẫu trên khắp Hoa Kỳ và Canada.',
 		'home.opensource.kicker': 'Mã nguồn mở',
 		'home.opensource.title': 'Xây dựng công khai',
 		'home.opensource.all': 'Tất cả',
@@ -287,11 +282,6 @@ export const ui = {
 		'home.writing.body':
 			'Những bài viết ngắn về áp dụng AI, căng thẳng trong công việc, và việc giữ góc nhìn con người ở trung tâm.',
 		'home.writing.cta': 'Đọc bài viết',
-		'home.experience.kicker': 'Kinh nghiệm',
-		'home.experience.title': 'Nơi tôi đang đưa công việc này vào thực tiễn.',
-		'home.experience.meetMinneapolis.role': 'Công bằng & Tác động cộng đồng',
-		'home.experience.waaban.role': 'Đồng sáng lập & CEO',
-		'home.experience.resume': 'Tải sơ yếu lý lịch (PDF)',
 		'home.recommendation.kicker': 'Lời giới thiệu',
 		'home.recommendation.title': 'Cảm giác khi làm việc cùng tôi.',
 		'home.recommendation.quote1':
@@ -453,11 +443,10 @@ export const ui = {
 		'home.hero.heading.before': 'Ayudo a personas y organizaciones a trabajar ',
 		'home.hero.heading.emphasis': 'bien',
 		'home.hero.heading.after': ' con IA.',
+		'home.hero.currentRoles': 'Actualmente: Meet Minneapolis · Waaban',
 		'home.actions.label': 'Acciones de la página de inicio',
 		'home.actions.work': 'Leer el trabajo',
 		'home.actions.contact': 'Ponerse en contacto',
-		'home.why.aria': 'Por qué este trabajo',
-		'home.why.kicker': 'Por qué este trabajo',
 		'home.why.statement':
 			'Soy Anishinaabe, descendiente de Red Lake Nation, y llegué a la IA a través de las personas: a quién ayuda, a quién deja fuera y cómo las organizaciones acompañan a sus comunidades cuando el trabajo cambia.',
 		'home.research.kicker': 'Destacado · Investigación',
@@ -468,13 +457,14 @@ export const ui = {
 		'home.work.kicker': 'Trabajo seleccionado',
 		'home.work.title': 'Proyectos construidos en el borde entre la IA y el trabajo.',
 		'home.work.waaban.blurb': 'Plataforma de análisis de mercado impulsada por IA. Cofundador y CEO.',
-		'home.work.markedInRed.blurb':
-			'Mapa de concientización sobre Mujeres, Niñas y personas Two-Spirit Indígenas desaparecidas y asesinadas. Definido, diseñado y lanzado de principio a fin.',
 		'home.work.woodhouse.blurb':
 			'Gestor de tareas construido por mí para reemplazar Asana. Un panel local respaldado por un repositorio privado de GitHub mediante un proxy de Express.',
 		'home.work.obsidianAi.blurb':
 			'Sistema personal de memoria de IA y agentes con archivos de conocimiento, hooks, skills y una capa de agentes Townfolk.',
 		'home.work.cta': 'Ver todo el trabajo',
+		'home.markedInRed.kicker': 'Mapa de concientización MMIWG2S',
+		'home.markedInRed.mapAlt':
+			'El mapa de concientización Marked in Red, mostrando marcadores de casos de muestra en Estados Unidos y Canadá.',
 		'home.opensource.kicker': 'Código abierto',
 		'home.opensource.title': 'Construido en público',
 		'home.opensource.all': 'Todo',
@@ -492,11 +482,6 @@ export const ui = {
 		'home.writing.body':
 			'Textos breves sobre adopción de IA, estrés laboral y mantener el lado humano a la vista.',
 		'home.writing.cta': 'Leer la escritura',
-		'home.experience.kicker': 'Experiencia',
-		'home.experience.title': 'Dónde estoy poniendo este trabajo en práctica.',
-		'home.experience.meetMinneapolis.role': 'Equidad e Impacto Comunitario',
-		'home.experience.waaban.role': 'Cofundador y CEO',
-		'home.experience.resume': 'Descargar currículum (PDF)',
 		'home.recommendation.kicker': 'Recomendación',
 		'home.recommendation.title': 'Cómo es trabajar conmigo.',
 		'home.recommendation.quote1':
@@ -660,8 +645,6 @@ export const ui = {
 		'home.actions.label': 'Homepage actions',
 		'home.actions.work': 'Read the work',
 		'home.actions.contact': 'Get in touch',
-		'home.why.aria': 'Why this work',
-		'home.why.kicker': 'Why this work',
 		'home.why.statement':
 			"Boozhoo. I'm Anishinaabe, a descendant of Miskwaagamiiwi-zaaga'igan (Red Lake Nation), and I came to AI through people: who it helps, who it leaves out, and how organizations bring their communities along as work changes.",
 		'home.research.kicker': 'Featured · Research',
@@ -672,8 +655,6 @@ export const ui = {
 		'home.work.kicker': 'Selected work',
 		'home.work.title': 'Built projects at the edge of AI and work.',
 		'home.work.waaban.blurb': 'AI-powered market-analysis platform. Co-founder & CEO.',
-		'home.work.markedInRed.blurb':
-			'Awareness map for Missing and Murdered Indigenous Women, Girls, and Two-Spirit people. Scoped, designed, and shipped end to end.',
 		'home.work.woodhouse.blurb':
 			'Self-built task manager replacing Asana. A local dashboard backed by a private GitHub repo via an Express proxy.',
 		'home.work.obsidianAi.blurb':
@@ -683,11 +664,6 @@ export const ui = {
 		'home.writing.title': 'Notes on AI and the future of work.',
 		'home.writing.body': 'Short pieces on AI adoption, job stress, and keeping the human side in view.',
 		'home.writing.cta': 'Read the writing',
-		'home.experience.kicker': 'Experience',
-		'home.experience.title': 'Where I am putting the work into practice.',
-		'home.experience.meetMinneapolis.role': 'Equity & Community Impact',
-		'home.experience.waaban.role': 'Co-founder & CEO',
-		'home.experience.resume': 'Download résumé (PDF)',
 		'home.recommendation.kicker': 'Recommendation',
 		'home.recommendation.title': "What it's like to work with me.",
 		'home.recommendation.quote1':
